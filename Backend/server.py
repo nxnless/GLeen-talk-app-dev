@@ -53,8 +53,8 @@ def api_get_comment():
 #         return jsonify({'message': 'PostID parameter is required'}), 400
 #     return get_Comment(PostID)
 
-# URL : http://192.168.1.136:5000/api/api_update_Like/1
-@app.route('/api/api_update_Like/<int:Post_ID>', methods=['PUT'])
+
+@app.route('/api/api_update_Like/', methods=['PUT'])
 @basic_auth.required
 def api_update_Like():
     data = request.json
