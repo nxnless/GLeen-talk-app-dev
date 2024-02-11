@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 # flask_cors requirement for JSX fontend
 from flask_cors import CORS 
 from controller import get_Post,get_Comment,update_Like,get_Trend,get_UserAccount,InsertPost,InsertComment,DeletePost,DeleteComment
-from bson.objectid import ObjectId
+# from bson.objectid import ObjectId
 from flask_basicauth import BasicAuth
 import json
 

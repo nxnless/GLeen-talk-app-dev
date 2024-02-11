@@ -1,0 +1,6 @@
+import jaaaaa
+json
+flask
+pypyodbc
+flask_cors
+flask_basicauth
