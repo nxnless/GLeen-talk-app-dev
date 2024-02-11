@@ -98,6 +98,9 @@ def get_Trend():
         cursor.execute("""
                        SELECT ID,Text_Post,Count_Like,User_Id,Count_Comment
                         FROM (
+                            SELECT ID,Text_Post,Count_Like,User_Id,Count_Comment
+                            FROM
+                            (
                             (SELECT ID,Text_Post,Count_Like,User_Id 
                             FROM Post ) AS v1
                             INNER JOIN
@@ -107,7 +110,22 @@ def get_Trend():
                             GROUP BY Post_Id) AS v2
                             ON v1.Id = v2.Post_Id
                         )
-                        ORDER BY Count_Like DESC
+                        ) AS t1
+                        UNION
+                            SELECT ID,Text_Post,Count_Like,User_Id,Count_Comment
+                            FROM
+                            (
+                            (SELECT ID,Text_Post,Count_Like,User_Id 
+                            FROM Post ) AS v1
+                            INNER JOIN
+                            (SELECT 0 as Count_Comment ,Post_Id
+                            FROM Comment 
+                            --WHERE Post_Id in (1,2) 
+                            GROUP BY Post_Id) AS v2
+                            ON v1.Id != v2.Post_Id
+                        )
+
+                        ORDER BY Count_Like DESC,Id DESC
                         """)
         rows = cursor.fetchall()
         
