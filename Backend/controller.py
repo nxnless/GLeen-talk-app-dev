@@ -7,7 +7,7 @@ DB_DATABASE = 'AppDevDB'
 DB_USERNAME = 'AppDev'
 DB_PASSWORD = '1234'
 ngrok_tcp_url = '0.tcp.ap.ngrok.io'
-ngrok_port = '15280'
+ngrok_port = '10784'
 
 def get_Post():
     try: 
@@ -16,17 +16,32 @@ def get_Post():
         cursor = connection.cursor()
         
         cursor.execute("""
-                       SELECT ID,Text_Post,Count_Like,User_Id,Count_Comment
+                        SELECT ID,Text_Post,Count_Like,User_Id,Count_Comment
                         FROM (
-                            (SELECT ID,Text_Post,Count_Like,User_Id 
-                            FROM Post ) AS v1
-                            INNER JOIN
-                            (SELECT COUNT(Text_Comment) as Count_Comment ,Post_Id
-                            FROM Comment 
-                            --WHERE Post_Id in (1,2) 
-                            GROUP BY Post_Id) AS v2
-                            ON v1.Id = v2.Post_Id
-                        )
+                        SELECT ID,Text_Post,Count_Like,User_Id,Count_Comment
+                        FROM (
+                                (SELECT ID,Text_Post,Count_Like,User_Id 
+                                FROM Post ) AS v1
+                                INNER JOIN
+                                (SELECT COUNT(Text_Comment) as Count_Comment ,Post_Id
+                                FROM Comment 
+                                --WHERE Post_Id in (1,2) 
+                                GROUP BY Post_Id) AS v2
+                                ON v1.Id = v2.Post_Id
+                        ) 
+                        ) AS t1 
+                        UNION 
+                        SELECT ID,Text_Post,Count_Like,User_Id,0 AS Count_Comment
+                        FROM (
+                                (SELECT ID,Text_Post,Count_Like,User_Id 
+                                FROM Post ) AS v1
+                                INNER JOIN
+                                (SELECT COUNT(Text_Comment) as Count_Comment ,Post_Id
+                                FROM Comment 
+                                --WHERE Post_Id in (1,2) 
+                                GROUP BY Post_Id) AS v2
+                                ON v1.Id != v2.Post_Id
+                        ) 
                         ORDER BY ID DESC
                         """)
         rows = cursor.fetchall()
