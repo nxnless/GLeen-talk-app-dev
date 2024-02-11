@@ -7,7 +7,7 @@ DB_DATABASE = 'AppDevDB'
 DB_USERNAME = 'AppDev'
 DB_PASSWORD = '1234'
 ngrok_tcp_url = '0.tcp.ap.ngrok.io'
-ngrok_port = '16880'
+ngrok_port = '15280'
 
 def get_Post():
     try: 
@@ -46,9 +46,9 @@ def get_Post():
 def get_Comment(PostID):
     try: 
         print(PostID)
-        connection = pypyodbc.connect(f'Driver=ODBC Driver 17 for SQL Server;Server={DB_SERVER};Database={DB_DATABASE};UID={DB_USERNAME};PWD={DB_PASSWORD};')
+        connection = pypyodbc.connect(f'Driver=ODBC Driver 17 for SQL Server;Server={ngrok_tcp_url},{ngrok_port};Database={DB_DATABASE};UID={DB_USERNAME};PWD={DB_PASSWORD};')
         cursor = connection.cursor()
-        
+        connection = pypyodbc.connect(f'Driver=ODBC Driver 17 for SQL Server;Server={ngrok_tcp_url},{ngrok_port};Database={DB_DATABASE};UID={DB_USERNAME};PWD={DB_PASSWORD};')
         cursor.execute("""
                        SELECT cm.Id,Text_Comment,cm.Post_Id,cm.User_Id,Icon
                         FROM Comment AS cm 
@@ -73,7 +73,7 @@ def get_Comment(PostID):
 def update_Like(PostID):
     try: 
         # print(PostID)
-        connection = pypyodbc.connect(f'Driver=ODBC Driver 17 for SQL Server;Server={DB_SERVER};Database={DB_DATABASE};UID={DB_USERNAME};PWD={DB_PASSWORD};')
+        connection = pypyodbc.connect(f'Driver=ODBC Driver 17 for SQL Server;Server={ngrok_tcp_url},{ngrok_port};Database={DB_DATABASE};UID={DB_USERNAME};PWD={DB_PASSWORD};')
         cursor = connection.cursor()
         
         cursor.execute("""
@@ -92,7 +92,7 @@ def update_Like(PostID):
     
 def get_Trend():
     try: 
-        connection = pypyodbc.connect(f'Driver=ODBC Driver 17 for SQL Server;Server={DB_SERVER};Database={DB_DATABASE};UID={DB_USERNAME};PWD={DB_PASSWORD};')
+        connection = pypyodbc.connect(f'Driver=ODBC Driver 17 for SQL Server;Server={ngrok_tcp_url},{ngrok_port};Database={DB_DATABASE};UID={DB_USERNAME};PWD={DB_PASSWORD};')
         cursor = connection.cursor()
         
         cursor.execute("""
@@ -124,7 +124,7 @@ def get_Trend():
     
 def get_UserAccount(User_Id,Password,User_Name):
     try: 
-        connection = pypyodbc.connect(f'Driver=ODBC Driver 17 for SQL Server;Server={DB_SERVER};Database={DB_DATABASE};UID={DB_USERNAME};PWD={DB_PASSWORD};')
+        connection = pypyodbc.connect(f'Driver=ODBC Driver 17 for SQL Server;Server={ngrok_tcp_url},{ngrok_port};Database={DB_DATABASE};UID={DB_USERNAME};PWD={DB_PASSWORD};')
         cursor = connection.cursor()
         
         cursor.execute("""
@@ -143,7 +143,7 @@ def get_UserAccount(User_Id,Password,User_Name):
 def InsertPost(Text_Post,User_Id):
     try: 
         print (Text_Post)
-        connection = pypyodbc.connect(f'Driver=ODBC Driver 17 for SQL Server;Server={DB_SERVER};Database={DB_DATABASE};UID={DB_USERNAME};PWD={DB_PASSWORD};')
+        connection = pypyodbc.connect(f'Driver=ODBC Driver 17 for SQL Server;Server={ngrok_tcp_url},{ngrok_port};Database={DB_DATABASE};UID={DB_USERNAME};PWD={DB_PASSWORD};')
         cursor = connection.cursor()
         
         cursor.execute("""
@@ -161,7 +161,7 @@ def InsertPost(Text_Post,User_Id):
     
 def InsertComment(Text_Comment,User_Id,PostID):
     try: 
-        connection = pypyodbc.connect(f'Driver=ODBC Driver 17 for SQL Server;Server={DB_SERVER};Database={DB_DATABASE};UID={DB_USERNAME};PWD={DB_PASSWORD};')
+        connection = pypyodbc.connect(f'Driver=ODBC Driver 17 for SQL Server;Server={ngrok_tcp_url},{ngrok_port};Database={DB_DATABASE};UID={DB_USERNAME};PWD={DB_PASSWORD};')
         cursor = connection.cursor()
         
         cursor.execute("""
@@ -179,7 +179,7 @@ def InsertComment(Text_Comment,User_Id,PostID):
 
 def DeletePost(User_Id,Id):
     try: 
-        connection = pypyodbc.connect(f'Driver=ODBC Driver 17 for SQL Server;Server={DB_SERVER};Database={DB_DATABASE};UID={DB_USERNAME};PWD={DB_PASSWORD};')
+        connection = pypyodbc.connect(f'Driver=ODBC Driver 17 for SQL Server;Server={ngrok_tcp_url},{ngrok_port};Database={DB_DATABASE};UID={DB_USERNAME};PWD={DB_PASSWORD};')
         cursor = connection.cursor()
         
         cursor.execute("""
@@ -199,7 +199,7 @@ def DeleteComment(Id,User_Id,PostID):
     # print (Id)
     try: 
         # print(Id+"and"+User_Id)
-        connection = pypyodbc.connect(f'Driver=ODBC Driver 17 for SQL Server;Server={DB_SERVER};Database={DB_DATABASE};UID={DB_USERNAME};PWD={DB_PASSWORD};')
+        connection = pypyodbc.connect(f'Driver=ODBC Driver 17 for SQL Server;Server={ngrok_tcp_url},{ngrok_port};Database={DB_DATABASE};UID={DB_USERNAME};PWD={DB_PASSWORD};')
         cursor = connection.cursor()
         
         cursor.execute("""
