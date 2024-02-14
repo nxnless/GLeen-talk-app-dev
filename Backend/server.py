@@ -25,7 +25,7 @@ def after_request(response):
 
 
 @app.route('/api/api_get_Post', methods=['GET'])
-@basic_auth.required
+# @basic_auth.required
 def api_get_post():
     return get_Post()
 

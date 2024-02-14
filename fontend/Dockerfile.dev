@@ -1,0 +1,20 @@
+# เลือกฐานข้อมูลที่ใหม่สุดของ Node.js
+FROM node:latest as development
+
+# กำหนดพื้นที่ที่จะใช้สำหรับโปรเจ็กต์ของเราใน Docker container
+WORKDIR /app
+
+# คัดลอกไฟล์ package.json และ package-lock.json เพื่อทำการ install dependencies
+COPY package*.json ./
+
+# ติดตั้ง dependencies โดยไม่ต้องใช้ --only=production เนื่องจากเราอยู่ในโหมดพัฒนา
+RUN npm install
+
+# คัดลอกโค้ดทั้งหมดไปยัง Docker container
+COPY . .
+
+# เปิดพอร์ต 8088 ที่จะใช้ในการรันแอปพลิเคชัน React ในโหมดพัฒนา
+EXPOSE 8088
+
+# เริ่มต้นคำสั่ง npm run dev เมื่อเริ่มต้น container
+CMD ["npm", "run", "dev"]

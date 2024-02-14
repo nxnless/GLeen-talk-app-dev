@@ -1,0 +1,6 @@
+flask
+pypyodbc
+flask_cors
+flask_basicauth
+pyodbc
+
