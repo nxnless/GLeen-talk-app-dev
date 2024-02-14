@@ -7,7 +7,7 @@ DB_DATABASE = 'AppDevDB'
 DB_USERNAME = 'AppDev'
 DB_PASSWORD = '1234'
 ngrok_tcp_url = '0.tcp.ap.ngrok.io'
-ngrok_port = '10784'
+ngrok_port = '15144'
 
 def get_Post():
     try: 
