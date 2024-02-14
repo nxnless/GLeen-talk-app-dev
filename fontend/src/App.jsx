@@ -17,13 +17,13 @@ import {
 
 //Router
 import Login from './pages/Login.jsx';
-import AppStore from './pages/AppStore.jsx';
+import HomePage from './pages/HomePage.jsx';
 
 
 const router = createBrowserRouter ([
   {
     path: '/',
-    element: <AppStore />,
+    element: <HomePage />,
   },
   {
     path: '/login',
