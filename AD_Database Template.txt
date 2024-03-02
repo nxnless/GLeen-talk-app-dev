@@ -1,0 +1,69 @@
+//_id = User_id
+
+//Like connect to MongoDb Compass
+mongodb+srv://nonnon2546:6qVqQW86EA83OSV3@cluster0.9yz02fk.mongodb.net
+
+//like เชื่อม
+mongodb+srv://nonnon2546:6qVqQW86EA83OSV3@cluster0.9yz02fk.mongodb.net/?retryWrites=true&w=majority
+
+Comment
+{
+"_id":int //alway len +1
+"like_count":int default 0
+"user_id":int
+"Comment_key": int
+"massage":varchar()
+"Post_key":int
+}
+
+Post_liked{
+"_id":int //alway len +1
+"user_id" : int
+"Post_key": int
+}
+
+Comment_Liked{
+"_id":int //alway len +1
+"user_id" : int
+"Post_key": int
+"Comment_key": int
+}
+
+Post
+{
+"_id":int //alway len +1
+"tag" : varchar()
+"Post_key":int
+"Text_post": varchar()
+"user_id": int
+"Comment_count": int
+}
+
+Account_id
+{
+"_id":int //alway len +1
+"user_id":int
+"User_name": varchar()
+"Password":varchar()
+}
+
+Icon
+{
+"_id":int //alway len +1    
+"Icon_id":int
+"Post_id":int
+"user_id":int
+}
+
+Post report
+{
+"_id":int //alway len +1
+"Post_id" : int
+"report_message" : varchar()
+}
+
+App report
+{
+"_id":int //alway len +1
+"Message" : varchar()
+}

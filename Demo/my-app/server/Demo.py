@@ -40,6 +40,7 @@ def add_user():
     try:
         data = request.get_json()  # Get JSON data from the request
         # Process the received data
+        #บรรทัดที่ 44-45 นี้ fix ว่าต้องเป็นแบบนี้อยู่แล้วเลยคับ
         id = collection.count_documents({}) + 1
         data['_id'] = id
         collection.insert_one(data)
