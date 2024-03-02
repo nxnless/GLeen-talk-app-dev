@@ -1,4 +1,4 @@
-//_id = User_id
+//_id ที่ต้องมี ทุกอันเพราะจะลดปัญหาที่ API มัน GET ละไม่ออกก็เลยให้เป็นแถวที่แค่เพิ่มค่าไปเรื่อยๆเฉยๆไม่มีการนำไปแสดงหรือใช้งานใดๆ
 
 //Like connect to MongoDb Compass
 mongodb+srv://nonnon2546:6qVqQW86EA83OSV3@cluster0.9yz02fk.mongodb.net
