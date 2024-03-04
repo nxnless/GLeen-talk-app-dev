@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from pymongo import MongoClient
 from flask_cors import CORS , cross_origin
 
+#ทำแค่ GET ธรรมดามาเลยก็ได้ไม่ต้อง filter มันไป filter ที่ ไฟล์ fontend ได้เดี๋ยวเราจัดการเอง
 app = Flask(__name__)
 cors = CORS(app) 
 app.config['CORS_HEADERS'] = 'Content-Type'
