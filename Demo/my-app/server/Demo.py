@@ -24,16 +24,6 @@ def get_users():
     users = list(collection.find({}))
     return jsonify(users)
 
-@app.route('/api/data', methods=['GET'])
-def get_data_by_common_field():
-    collection = db['Comment']
-    try:
-        common_value = request.args.get('common_value')  # Assuming you're passing the common value as a query parameter
-        data = list(collection.find({'common_field': common_value}))
-        return jsonify(data), 200
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
 @app.route('/api/products', methods=['POST'])
 @cross_origin()
 def add_user():
@@ -41,9 +31,10 @@ def add_user():
     try:
         data = request.get_json()  # Get JSON data from the request
         # Process the received data
-        #บรรทัดที่ 44-45 นี้ fix ว่าต้องเป็นแบบนี้อยู่แล้วเลยคับ
+        #บรรทัดที่ 35-36 นี้ fix ว่าต้องเป็นแบบนี้อยู่แล้วเลยคับ
         id = collection.count_documents({}) + 1
         data['_id'] = id
+        #_id ทำงี้เพราะว่าตอนที่ _id เป็น string มัน query ไม่ออกไม่รู้ทำไม
         collection.insert_one(data)
         return jsonify({'message': 'Data inserted successfully'}), 200
     except Exception as e:
