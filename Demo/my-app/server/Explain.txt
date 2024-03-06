@@ -1,12 +1,13 @@
 //_id ที่ต้องมี ทุกอันเพราะจะลดปัญหาที่ API มัน GET ละไม่ออกก็เลยให้เป็นแถวที่แค่เพิ่มค่าไปเรื่อยๆเฉยๆไม่มีการนำไปแสดงหรือใช้งานใดๆ
 
-//Like connect to MongoDb Compass
+// connect to MongoDb Compass
 mongodb+srv://nonnon2546:6qVqQW86EA83OSV3@cluster0.9yz02fk.mongodb.net
 
-//like เชื่อม
+// เชื่อม
 mongodb+srv://nonnon2546:6qVqQW86EA83OSV3@cluster0.9yz02fk.mongodb.net/?retryWrites=true&w=majority
 
-//comment ข้อมูลที่จะส่งมามี post_key , user_id , Message
+//ข้อมูลที่จะส่งมามี post_key , user_id , Message , Comment_key
+//ลบข้อมูล by _id
 Comment
 {
 "_id":int //alway len +1
@@ -17,6 +18,7 @@ Comment
 }
 
 //ข้อมูลที่จะส่งมามี user_id , Post_key
+//ลบข้อมูล by user_id
 Post_liked{
 "_id":int //alway len +1
 "user_id" : int
@@ -24,6 +26,7 @@ Post_liked{
 }
 
 //ข้อมูลที่จะส่งมามี user_id , Post_key , Comment_key
+//ลบข้อมูล by user_id
 Comment_Liked{
 "_id":int //alway len +1
 "user_id" : int
@@ -31,7 +34,8 @@ Comment_Liked{
 "Comment_key": int
 }
 
-//ข้อมูลที่จะส่งมามี tag_id , post_key , Text_post , user_id ,
+//ข้อมูลที่จะส่งมามี tag_id , post_key , Text_post , user_id 
+//ลบข้อมูล by post_key
 Post
 {
 "_id":int //alway len +1
@@ -58,7 +62,7 @@ Account_id
     "Password":varchar()
 }
 
-//ข้อมูลที่จะส่งมามี user_id , Post_id , Icon
+//ข้อมูลที่จะส่งมามี user_id , Post_id , Icon_id
 Icon
 {
 "_id":int //alway len +1    

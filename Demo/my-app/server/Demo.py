@@ -43,16 +43,16 @@ def add_user():
 
 
 # โปรแกรม เราไม่มี put ไม่ต้องใส่ใจตรงนี้ก็ได้
-@app.route('/api/products/<user_id>', methods=['PUT'])
-@cross_origin()
-def update_user(user_id):
-    collection = db['Comment']
-    user_data = request.json
-    result = collection.update_one({"_id": user_id}, {"$set": user_data})
-    if result.modified_count > 0:
-        return jsonify({"message": "User updated successfully"})
-    else:
-        return jsonify({"message": "User not found"}), 404
+# @app.route('/api/products/<user_id>', methods=['PUT'])
+# @cross_origin()
+# def update_user(user_id):
+#     collection = db['Comment']
+#     user_data = request.json
+#     result = collection.update_one({"_id": user_id}, {"$set": user_data})
+#     if result.modified_count > 0:
+#         return jsonify({"message": "User updated successfully"})
+#     else:
+#         return jsonify({"message": "User not found"}), 404
     
 @app.route('/api/products/<int:id>', methods=['DELETE'])
 @cross_origin()
