@@ -1,0 +1,83 @@
+//_id ที่ต้องมี ทุกอันเพราะจะลดปัญหาที่ API มัน GET ละไม่ออกก็เลยให้เป็นแถวที่แค่เพิ่มค่าไปเรื่อยๆเฉยๆไม่มีการนำไปแสดงหรือใช้งานใดๆ
+
+//Like connect to MongoDb Compass
+mongodb+srv://nonnon2546:6qVqQW86EA83OSV3@cluster0.9yz02fk.mongodb.net
+
+//like เชื่อม
+mongodb+srv://nonnon2546:6qVqQW86EA83OSV3@cluster0.9yz02fk.mongodb.net/?retryWrites=true&w=majority
+
+//comment ข้อมูลที่จะส่งมามี post_key , user_id , Message
+Comment
+{
+"_id":int //alway len +1
+"user_id":int
+"Comment_key": int
+"massage":varchar()
+"Post_key":int
+}
+
+//ข้อมูลที่จะส่งมามี user_id , Post_key
+Post_liked{
+"_id":int //alway len +1
+"user_id" : int
+"Post_key": int
+}
+
+//ข้อมูลที่จะส่งมามี user_id , Post_key , Comment_key
+Comment_Liked{
+"_id":int //alway len +1
+"user_id" : int
+"Post_key": int
+"Comment_key": int
+}
+
+//ข้อมูลที่จะส่งมามี tag_id , post_key , Text_post , user_id ,
+Post
+{
+"_id":int //alway len +1
+"tag_id" : int
+"Post_key":int
+"Text_post": varchar()
+"user_id": int
+}
+
+//อันนี้เดี๋ยวเซ็ตค่าไว้เลย
+//มี GET ด้วยนะ
+Tag{
+    "_id":int
+    "tag_id":int
+    "tag_name":varchar()
+}
+
+//ข้อมูลที่จะส่งมามี User_name , Password
+Account_id
+{
+    "_id":int //alway len +1
+    "user_id":int len+1
+    "User_name": varchar()
+    "Password":varchar()
+}
+
+//ข้อมูลที่จะส่งมามี user_id , Post_id , Icon
+Icon
+{
+"_id":int //alway len +1    
+"Icon_id":int
+"Post_id":int
+"user_id":int
+}
+
+//ข้อมูลที่จะส่งมามี Post_id , report_message
+Post report
+{
+"_id":int //alway len +1
+"Post_id" : int
+"report_message" : varchar()
+}
+
+//ข้อมูลที่จะส่งมามี Message
+App report
+{
+"_id":int //alway len +1
+"Message" : varchar()
+}
