@@ -1,0 +1,4 @@
+ตอนทำเสน็จละฝาก list การเข้าถึง api แต่ละอันมาให้หน่อยได้ม๊า
+แบบ
+Get comment -> /comment
+Delete comment -> /comment/Comment_key งี้
