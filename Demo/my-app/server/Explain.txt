@@ -6,10 +6,11 @@ mongodb+srv://nonnon2546:6qVqQW86EA83OSV3@cluster0.9yz02fk.mongodb.net
 // เชื่อม
 mongodb+srv://nonnon2546:6qVqQW86EA83OSV3@cluster0.9yz02fk.mongodb.net/?retryWrites=true&w=majority
 
-//ข้อมูลที่จะส่งมามี post_key , user_id , Message , Comment_key
+//ข้อมูลที่จะส่งมามี post_key , user_id , Message , Comment_key , Icon_id
 //ลบข้อมูล by _id
 Comment
 {
+"Icon_id" : int
 "_id":int //alway len +1
 "user_id":int
 "Comment_key": int

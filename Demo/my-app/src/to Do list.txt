@@ -1,0 +1,35 @@
+ทุกหน้ามี send help //App_report
+insert(Message)
+
+หน้า feed
+##Post
+insert(tag_id , post_key , Text_post , user_id)
+like = Post_liked by post_key -> length
+get by _id sort desk //feed
+get comment by post_key -> length
+ปุ่มกดlike มี state ที่เปลี่ยนไปตอนกด กด 1 ครั้ง insert(user_id , post_key) กดอีกที delete(user_id)
+
+insert_report(Message , post_key)
+sort by user_id //my post -> มี function delete {
+    delete(post_key) -> จะไปลบ 
+    comment(post_key) เดียวกันด้วย
+    Comment_key(post_key) เดียวกันด้วย
+    Post_liked(post_key)
+    } 
+sort by Post_liked->length + Comment_Liked->length //Trend
+sort by tag_id //tag
+
+หน้า comment
+##Comment
+get post_massage by post_key
+Post_liked by post_key -> length //form Post_liked
+insert(user_id , Message , post_key , Icon_id) by Icon_id = if {user_id = Post.user_id send 1} else {send filter by post_key len+2}
+get Comment by post_key
+Comment_Liked = Comment_key -> length
+ปุ่มกดlike มี state ที่เปลี่ยนไปตอนกด กด 1 ครั้ง insert(user_id , post_key , Comment_key) กดอีกที delete(user_id)
+insert ไปที่ Comment_Liked
+
+Account_id
+insert(User_name , user_id , Password)
+Authorize
+
