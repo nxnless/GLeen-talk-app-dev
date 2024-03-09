@@ -24,6 +24,33 @@ def get_users():
     users = list(collection.find({}))
     return jsonify(users)
 
+
+# อันนี้เอาไว้หา อันเดียว find_one
+@app.route("/book/<string:author_id>",methods=["GET"])
+@cross_origin()
+def get_book(author_id):
+    collection = db['Comment']
+    book =  next(( b for b in collection if b["author"]==author_id ),None)
+    if book:
+        return jsonify(book)
+    else:
+        return jsonify({"error":"Book not found"}),404
+    
+
+# อันนี้เอาไว้หาหลายอันคล้ายๆ filter 
+@app.route("/books/<string:author_id>", methods=["GET"])
+@cross_origin()
+def get_books_by_author(author_id):
+    collection = db['Comment']
+    matched_books = [book for book in collection if book["author"] == author_id]
+
+    if matched_books:
+        return jsonify(matched_books)
+    else:
+        return jsonify({"error": "Books not found for author"}), 404
+    
+
+
 @app.route('/api/products', methods=['POST'])
 @cross_origin()
 def add_user():
