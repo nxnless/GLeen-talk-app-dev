@@ -1,8 +1,9 @@
+// file นี้เอาไว้ test การ query แล้วมีการ sort ใหม่
 // test query โดยมีการ filter ใช้ในหน้า my post หรือ หน้า on trend
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Getfilter = ()=>{
+const GetSort = ()=>{
     const baseURL = "http://127.0.0.1:5000";
     const [product, setProduct] = useState([]);
     //Normal Get
@@ -19,9 +20,8 @@ const Getfilter = ()=>{
         //condition
         return p.price >1000;
     })
-
     let pnd;
-
+    
     //To generate data
     if (Array.isArray(product)) {
     pnd = productFilter.map(p => (
@@ -39,11 +39,10 @@ const Getfilter = ()=>{
 
     return (
         <>
-        <div>{pnd.length}</div>
         <div>
             {pnd}
         </div>
         </>
     )
 }
-export default Getfilter;
+export default GetSort;

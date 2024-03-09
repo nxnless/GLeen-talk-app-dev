@@ -4,12 +4,12 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Getfilter from './Getfilter';
-
+import GetSort from './GetSort';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Getfilter/>
-
+    <GetSort/>
     {/* <App /> */}
   </React.StrictMode>
 );

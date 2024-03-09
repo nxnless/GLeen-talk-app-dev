@@ -1,1 +1,0 @@
-// file นี้เอาไว้ test การ query แบบไม่มีการ filter
