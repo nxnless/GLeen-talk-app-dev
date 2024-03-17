@@ -5,12 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Getfilter from './Getfilter';
 import GetSort from './GetSort';
+import Register from './Register';
+import Login from './Login';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Getfilter/>
-    <GetSort/>
+    {/* <Getfilter/> */}
+    {/* <GetSort/> */}
     {/* <App /> */}
+    {/* <Register></Register> */}
+    <Login/>
   </React.StrictMode>
 );
 
