@@ -7,6 +7,7 @@ import Getfilter from './Getfilter';
 import GetSort from './GetSort';
 import Register from './Register';
 import Login from './Login';
+import InsertPost from './InsertPost';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -14,7 +15,8 @@ root.render(
     {/* <GetSort/> */}
     {/* <App /> */}
     {/* <Register></Register> */}
-    <Login/>
+    {/* <Login/> */}
+    <InsertPost/>
   </React.StrictMode>
 );
 

@@ -30,7 +30,7 @@ Comment_Liked = Comment_key -> length 👍
 insert ไปที่ Comment_Liked 👍
 
 Account_id
-insert(User_name , user_id , Password) 👍
+insert(User_name, Password) 👍
 Authorize
 
 //งานทีเหลือ

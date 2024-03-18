@@ -2,7 +2,7 @@
 import pymongo
 from flask import Flask,request,jsonify,Response
 import json
-from flask_basicauth import BasicAuth
+
 from flask_cors import CORS
 from bson import ObjectId
 
@@ -17,15 +17,13 @@ uri = "mongodb+srv://nonnon2546:6qVqQW86EA83OSV3@cluster0.9yz02fk.mongodb.net"
 # Create a new client and connect to the server
 client = pymongo.MongoClient(uri)
 
-# Auth
-app.config['BASIC_AUTH_USERNAME'] = 'AppDev'
-app.config['BASIC_AUTH_PASSWORD'] = '1234AppDev'
-basic_auth = BasicAuth(app)
+
+
 
 
 
 @app.route('/api/CreateAccount', methods=['POST'])
-@basic_auth.required
+
 def insert_Account():
     try :
         client.admin.command("ping")
@@ -58,7 +56,7 @@ def insert_Account():
 
 
 @app.route('/api/AppReport', methods=['POST'])
-@basic_auth.required
+
 def insert_AppReport():
     try :
         client.admin.command("ping")
@@ -81,7 +79,7 @@ def insert_AppReport():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/PostReport', methods=['POST'])
-@basic_auth.required
+
 def insert_PostReport():
     try :
         client.admin.command("ping")
@@ -106,7 +104,7 @@ def insert_PostReport():
 
 
 @app.route('/api/InsertPost', methods=['POST'])
-@basic_auth.required
+
 def insert_Post():
     try :
         client.admin.command("ping")
@@ -138,7 +136,7 @@ def insert_Post():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/InsertComment', methods=['POST'])
-@basic_auth.required
+
 def insert_Comment():
     try :
         client.admin.command("ping")
@@ -177,7 +175,7 @@ def insert_Comment():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/LikePost', methods=['POST'])
-@basic_auth.required
+
 def insert_LikePost():
     try :
         client.admin.command("ping")
@@ -212,7 +210,7 @@ def insert_LikePost():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/LikeComment', methods=['POST'])
-@basic_auth.required
+
 def insert_LikeComment():
     try :
         client.admin.command("ping")
@@ -248,7 +246,7 @@ def insert_LikeComment():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/Icon', methods=['POST'])
-@basic_auth.required
+
 def insert_Icon():
     try :
         client.admin.command("ping")
@@ -275,7 +273,7 @@ def insert_Icon():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/GetIcon', methods=['POST'])
-@basic_auth.required
+
 def get_Icon():
     try:
         client.admin.command("ping")
@@ -298,7 +296,7 @@ def get_Icon():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/GetAllPost', methods=['GET'])
-@basic_auth.required
+
 def get_all_posts():
     try:
         client.admin.command("ping")
@@ -314,7 +312,7 @@ def get_all_posts():
 
 
 @app.route('/api/GetComment', methods=['POST'])
-@basic_auth.required
+
 def get_Comments():
     try :
         client.admin.command("ping")
