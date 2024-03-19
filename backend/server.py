@@ -129,9 +129,8 @@ def insert_Post():
         return jsonify({"message": "Inserted Post Successfully"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
+    
 @app.route('/api/InsertComment', methods=['POST'])
-
 def insert_Comment():
     try :
         client.admin.command("ping")
@@ -267,8 +266,8 @@ def insert_Icon():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# ทำไม get ICON ถึงเป็น method POST อะ
 @app.route('/api/GetIcon', methods=['POST'])
-
 def get_Icon():
     try:
         client.admin.command("ping")

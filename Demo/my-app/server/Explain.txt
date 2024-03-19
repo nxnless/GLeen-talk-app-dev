@@ -6,7 +6,7 @@ mongodb+srv://nonnon2546:6qVqQW86EA83OSV3@cluster0.9yz02fk.mongodb.net
 // เชื่อม
 mongodb+srv://nonnon2546:6qVqQW86EA83OSV3@cluster0.9yz02fk.mongodb.net/?retryWrites=true&w=majority
 
-//ข้อมูลที่จะส่งมามี post_key , user_id , Message , Comment_key , Icon_id
+👍//ข้อมูลที่จะส่งมามี post_key , user_id , Message , Comment_key , Icon_id
 //ลบข้อมูล by _id
 Comment
 {
@@ -18,7 +18,7 @@ Comment
 "Post_key":int
 }
 
-//ข้อมูลที่จะส่งมามี user_id , Post_key
+👍//ข้อมูลที่จะส่งมามี user_id , Post_key
 //ลบข้อมูล by user_id
 Post_liked{
 "_id":int //alway len +1
@@ -26,7 +26,7 @@ Post_liked{
 "Post_key": int
 }
 
-//ข้อมูลที่จะส่งมามี user_id , Post_key , Comment_key
+👍//ข้อมูลที่จะส่งมามี user_id , Post_key , Comment_key
 //ลบข้อมูล by user_id
 Comment_Liked{
 "_id":int //alway len +1
@@ -35,7 +35,7 @@ Comment_Liked{
 "Comment_key": int
 }
 
-//ข้อมูลที่จะส่งมามี tag_id , post_key , Text_post , user_id 
+👍//ข้อมูลที่จะส่งมามี tag_id , post_key , Text_post , user_id 
 //ลบข้อมูล by post_key
 Post
 {
@@ -54,7 +54,7 @@ Tag{
     "tag_name":varchar()
 }
 
-//ข้อมูลที่จะส่งมามี User_name , Password
+//ข้อมูลที่จะส่งมามี User_name , Password 👍
 Account_id
 {
     "_id":int //alway len +1
@@ -63,7 +63,7 @@ Account_id
     "Password":varchar()
 }
 
-//ข้อมูลที่จะส่งมามี user_id , Post_id , Icon_id
+👍//ข้อมูลที่จะส่งมามี user_id , Post_id , Icon_id
 Icon
 {
 "_id":int //alway len +1    
@@ -72,7 +72,7 @@ Icon
 "user_id":int
 }
 
-//ข้อมูลที่จะส่งมามี Post_id , report_message
+//ข้อมูลที่จะส่งมามี Post_id , report_message 👍
 Post report
 {
 "_id":int //alway len +1
@@ -80,9 +80,19 @@ Post report
 "report_message" : varchar()
 }
 
-//ข้อมูลที่จะส่งมามี Message
+//ข้อมูลที่จะส่งมามี Message 👍
 App report
 {
 "_id":int //alway len +1
 "Message" : varchar()
 }
+
+
+-delete liked by user_id ทั้ง post,commend
+-delete comment by _id
+
+-delete(post_key) -> จะไปลบ {
+    comment(post_key) เดียวกันด้วย
+    Comment_liked(post_key) เดียวกันด้วย
+    Post_liked(post_key)
+    }
