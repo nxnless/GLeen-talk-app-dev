@@ -11,7 +11,7 @@ const Register = ()=>{
     const [checkUsername , setCheckUsername] = useState([]);
 
     React.useEffect(() => {
-        axios.get(url+"/api/alluser").then((response) => {
+        axios.get(url+"/api/alluser" /*+Username */).then((response) => {
             setCheckUsername(response.data);
         });
       }, []);
