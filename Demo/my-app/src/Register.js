@@ -11,7 +11,7 @@ const Register = ()=>{
     const [checkUsername , setCheckUsername] = useState([]);
 
     React.useEffect(() => {
-        axios.get(url+"/user").then((response) => {
+        axios.get(url+"/api/alluser" /*+Username */).then((response) => {
             setCheckUsername(response.data);
         });
       }, []);
@@ -27,11 +27,11 @@ const Register = ()=>{
         if(Pass.current.value.length >=8){
             if(Pass.current.value === PassConfirm.current.value && chk.length == 0){
                 const data = {
-                    user_name:Username.current.value,
-                    pass:Pass.current.value
+                    UserName:Username.current.value,
+                    Password:Pass.current.value
                 }
                 try {
-                axios.post(url+"register",data).then((response) => {
+                axios.post(url+"/api/CreateAccount",data).then((response) => {
                     setRegisState(response.data);
                 });
                 }catch (error) {
@@ -40,7 +40,7 @@ const Register = ()=>{
                 
                 console.log(data)
                 showError("")
-                window.location.reload(false);
+                // window.location.reload(false);
             }
             else if(chk.length >0){
                 showError("username is used")

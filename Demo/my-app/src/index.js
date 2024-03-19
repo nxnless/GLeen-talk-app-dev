@@ -15,10 +15,10 @@ root.render(
     {/* <Getfilter/> */}
     {/* <GetSort/> */}
     {/* <App /> */}
-    {/* <Register></Register> */}
+    <Register></Register>
     {/* <Login/> */}
     {/* <InsertPost/> */}
-    <InsertTest/>
+    {/* <InsertTest/> */}
   </React.StrictMode>
 );
 
