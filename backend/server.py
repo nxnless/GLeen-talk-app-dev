@@ -2,13 +2,14 @@
 import pymongo
 from flask import Flask,request,jsonify,Response
 import json
-
+from flask_cors import CORS , cross_origin
 from flask_cors import CORS
 from bson import ObjectId
 
 
 app = Flask(__name__)
-
+cors = CORS(app) 
+app.config['CORS_HEADERS'] = 'Content-Type'
 # Allow  Relate Api and Fontend 
 CORS(app, origins='*')
 
@@ -23,7 +24,7 @@ client = pymongo.MongoClient(uri)
 
 
 @app.route('/api/CreateAccount', methods=['POST'])
-
+@cross_origin()
 def insert_Account():
     try :
         client.admin.command("ping")
@@ -31,7 +32,7 @@ def insert_Account():
         collection = db["User_Account"]
         data = request.get_json()
         Username = data.get('UserName')
-        UserID = data.get('UserID')
+        # UserID = data.get('UserID')
         Password = data.get('Password')
         # print(data)
 
@@ -39,18 +40,18 @@ def insert_Account():
             return jsonify({"message": "Please fill in all fields"}), 400
 
         if collection.count_documents({}) == 0:
-            new_data = {"_id": 1, "User_Name": Username, "Password": Password, "User_ID": UserID}
+            new_data = {"_id": 1, "User_Name": Username, "Password": Password, }
         else :
             # หา _id ที่มีค่ามากที่สุด
             max_id = collection.find_one(sort=[("_id", -1)])["_id"]
             # เพิ่มค่า _id ใหม่โดยบวกด้วย 1
             new_id = max_id + 1
-            new_data = {"_id": new_id, "User_Name": Username, "Password": Password, "User_ID": UserID}
+            new_data = {"_id": new_id, "User_Name": Username, "Password": Password, }
 
         # บันทึกข้อมูลลงใน MongoDB
         result = collection.insert_one(new_data)
         # print(result)
-        return jsonify({"message": "Register Account successfully", "id": UserID}), 200
+        return jsonify({"message": "Register Account successfully", }), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -329,6 +330,17 @@ def get_Comments():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
+@app.route('/api/alluser', methods=['GET'])
+@cross_origin()
+def get_users():
+    #ตรง collection อยากให้เปลี่ยนให้ตรงกับชื่อ collection ใน databases มันจะได้เชื่อมกัน เพราะเรามีหลาย collection
+    # ปล. collection คล้ายๆ table แหละ
+    client.admin.command("ping")
+    db = client["AppDev"]
+    collection = db["User_Account"]
+    users = list(collection.find({}))
+    return jsonify(users)
 
 
 if (__name__ == "__main__") :

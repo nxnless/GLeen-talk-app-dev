@@ -39,7 +39,7 @@ def login():
     return jsonify({'message': 'Invalid username or password'}), 401
     
 
-@app.route('/user', methods=['GET'])
+@app.route('/api/alluser', methods=['GET'])
 @cross_origin()
 def get_users():
     #ตรง collection อยากให้เปลี่ยนให้ตรงกับชื่อ collection ใน databases มันจะได้เชื่อมกัน เพราะเรามีหลาย collection

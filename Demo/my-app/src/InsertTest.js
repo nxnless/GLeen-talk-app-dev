@@ -6,17 +6,18 @@ const InsertTest = ()=>{
     const Username = React.createRef();
     const Pass = React.createRef();
     const PassConfirm = React.createRef();
+    const [Post , setPostState] = useState(null)
     const [textError , showError] = useState('')
     // asdasd
 
     const Insert = ()=>{
                 const data = {
-                    user_name:Username.current.value,
-                    pass:Pass.current.value
+                    Username:Username.current.value,
+                    Password:Pass.current.value
                 }
                 try {
-                    axios.post(url+"register",data).then((response) => {
-                    setRegisState(response.data);
+                    axios.post(url+"/api/CreateAccount",data).then((response) => {
+                    setPostState(response.data);
                 });
                 }catch (error) {
                     console.error('Error fetching data:', error);

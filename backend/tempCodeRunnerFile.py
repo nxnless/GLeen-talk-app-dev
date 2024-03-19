@@ -1,1 +1,1 @@
-/api/InsertComment
+/api/alluser
