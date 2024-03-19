@@ -96,3 +96,13 @@ App report
     Comment_liked(post_key) เดียวกันด้วย
     Post_liked(post_key)
     }
+
+-function GET ที่ยังไม่ทำ
+    -Get all post by tag > find_many
+    -Get Post_liked by post_key > find_many
+    -Get commend by post_key > find_many
+    -Get Comment_liked by post_key , Comment_key > find_many
+    -Get Icon by user_id , post_key > find_one
+    -Get post by user_id > find_many
+    
+    
