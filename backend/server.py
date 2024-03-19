@@ -18,9 +18,9 @@ uri = "mongodb+srv://nonnon2546:6qVqQW86EA83OSV3@cluster0.9yz02fk.mongodb.net"
 client = pymongo.MongoClient(uri)
 
 # Auth
-app.config['BASIC_AUTH_USERNAME'] = 'AppDev'
-app.config['BASIC_AUTH_PASSWORD'] = '1234AppDev'
-basic_auth = BasicAuth(app)
+# app.config['BASIC_AUTH_USERNAME'] = 'AppDev'
+# app.config['BASIC_AUTH_PASSWORD'] = '1234AppDev'
+# basic_auth = BasicAuth(app)
 
 
 
