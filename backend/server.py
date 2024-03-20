@@ -159,7 +159,7 @@ def insert_Comment():
             new_data = {"_id": new_id,"User_ID": User_ID, "Comment_Key": new_id, "Text_Comment": Text_Comment, "Post_Key": Post_Key,"Like_Comment": 0}
 
         result = collection.insert_one(new_data)
-
+        
         # อัปเดต Comment_Count ในตาราง "post"
         post_collection = db["Post"]
         post_collection.update_one({"Post_Key": Post_Key}, {"$inc": {"Comment_Count": 1}})
