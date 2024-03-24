@@ -1,15 +1,17 @@
 # python -u "d:\Appdev\mongodb\std.py"
 import pymongo
 from flask import Flask,request,jsonify,Response
-import json
-from flask_cors import CORS
-from bson import ObjectId
-
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask_cors import CORS , cross_origin
+from pymongo import MongoClient
 
 app = Flask(__name__)
-
+cors = CORS(app) 
+app.config['JWT_SECRET_KEY'] = 'your_secret_key'  # Change this to a secure secret key
+app.config['CORS_HEADERS'] = 'Content-Type'
+jwt = JWTManager(app)
 # Allow  Relate Api and Fontend 
-CORS(app, origins='*')
+
 
 uri = "mongodb+srv://nonnon2546:6qVqQW86EA83OSV3@cluster0.9yz02fk.mongodb.net"
 
@@ -21,9 +23,12 @@ client = pymongo.MongoClient(uri)
 # app.config['BASIC_AUTH_PASSWORD'] = '1234AppDev'
 # basic_auth = BasicAuth(app)
 
-
+@app.route("/")
+def hello_world():
+    return "<p>Hello, World!</p>"
 
 @app.route('/api/CreateAccount', methods=['POST'])
+@cross_origin()
 def insert_Account():
     try :
         client.admin.command("ping")
@@ -31,21 +36,21 @@ def insert_Account():
         collection = db["User_Account"]
         data = request.get_json()
 
-        if 'UserName' not in data  or 'UserID' not in data   or 'Password' not in data :
+        if 'User_Name' not in data   or 'Password' not in data :
             return jsonify({"message": "Please fill in all fields"}), 400
 
-        Username = data.get('UserName')
-        UserID = data.get('UserID')
+        Username = data.get('User_Name')
         Password = data.get('Password')
         # print(data)
 
         if collection.count_documents({}) == 0:
-            new_data = {"_id": 1, "User_Name": Username, "Password": Password, "User_ID": UserID}
+            new_data = {"_id": 1, "User_Name": Username, "Password": Password, "User_ID": 1}
         else :
             # หา _id ที่มีค่ามากที่สุด
             max_id = collection.find_one(sort=[("_id", -1)])["_id"]
             # เพิ่มค่า _id ใหม่โดยบวกด้วย 1
             new_id = max_id + 1
+            UserID = new_id
             new_data = {"_id": new_id, "User_Name": Username, "Password": Password, "User_ID": UserID}
 
         # บันทึกข้อมูลลงใน MongoDB
@@ -57,6 +62,7 @@ def insert_Account():
 
 
 @app.route('/api/AppReport', methods=['POST'])
+@cross_origin()
 def insert_AppReport():
     try :
         client.admin.command("ping")
@@ -81,6 +87,7 @@ def insert_AppReport():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/PostReport', methods=['POST'])
+@cross_origin()
 def insert_PostReport():
     try :
         client.admin.command("ping")
@@ -92,13 +99,13 @@ def insert_PostReport():
             return jsonify({"message": "Please fill in all fields"}), 400
 
         PostReportMessage = data.get('PostReportMessage')
-
+        Post_Key = data.get('Post_Key')
         if collection.count_documents({}) == 0:
             new_data = {"_id": 1, "PostReportMessage": PostReportMessage}
         else :
             max_id = collection.find_one(sort=[("_id", -1)])["_id"]
             new_id = max_id + 1
-            new_data = {"_id": new_id, "PostReportMessage": PostReportMessage}
+            new_data = {"_id": new_id, "PostReportMessage": PostReportMessage , "Post_Key":Post_Key}
         result = collection.insert_one(new_data)
         return jsonify({"message": "Inserted Report Successfully"}), 200
     except Exception as e:
@@ -106,6 +113,7 @@ def insert_PostReport():
 
 
 @app.route('/api/InsertPost', methods=['POST'])
+@cross_origin()
 def insert_Post():
     try :
         client.admin.command("ping")
@@ -138,6 +146,7 @@ def insert_Post():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/InsertComment', methods=['POST'])
+@cross_origin()
 def insert_Comment():
     try :
         client.admin.command("ping")
@@ -174,6 +183,7 @@ def insert_Comment():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/LikePost', methods=['POST'])
+@cross_origin()
 def insert_LikePost():
     try :
         client.admin.command("ping")
@@ -209,6 +219,7 @@ def insert_LikePost():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/LikeComment', methods=['POST'])
+@cross_origin()
 def insert_LikeComment():
     try :
         client.admin.command("ping")
@@ -244,6 +255,7 @@ def insert_LikeComment():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/Icon', methods=['POST'])
+@cross_origin()
 def insert_Icon():
     try :
         client.admin.command("ping")
@@ -271,6 +283,7 @@ def insert_Icon():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/GetIcon', methods=['GET'])
+@cross_origin()
 def get_Icon():
     try:
         client.admin.command("ping")
@@ -294,6 +307,7 @@ def get_Icon():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/GetAllPost', methods=['GET'])
+@cross_origin()
 def get_all_posts():
     try:
         client.admin.command("ping")
@@ -309,6 +323,7 @@ def get_all_posts():
 
 
 @app.route('/api/GetComment', methods=['GET'])
+@cross_origin()
 def get_Comments():
     try :
         client.admin.command("ping")
@@ -328,6 +343,7 @@ def get_Comments():
 
 
 @app.route('/api/AllPostByTag', methods=['GET'])
+@cross_origin()
 def get_PostTag():
     try :
         client.admin.command("ping")
@@ -347,6 +363,7 @@ def get_PostTag():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/GetPostLiked', methods=['GET'])
+@cross_origin()
 def get_PostLiked():
     try :
         client.admin.command("ping")
@@ -366,6 +383,7 @@ def get_PostLiked():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/GetCommentByPostKey', methods=['GET'])
+@cross_origin()
 def get_CommentByPostKey():
     try :
         client.admin.command("ping")
@@ -385,6 +403,7 @@ def get_CommentByPostKey():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/GetCommentLiked', methods=['GET'])
+@cross_origin()
 def get_CommentLiked():
     try :
         client.admin.command("ping")
@@ -405,6 +424,7 @@ def get_CommentLiked():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/IconByUserID', methods=['GET'])
+@cross_origin()
 def get_IconByUserID():
     try :
         client.admin.command("ping")
@@ -425,6 +445,7 @@ def get_IconByUserID():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/PostByUserID', methods=['GET'])
+@cross_origin()
 def get_PostByUserID():
     try :
         client.admin.command("ping")
@@ -444,6 +465,7 @@ def get_PostByUserID():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/DeletePostLike', methods=['DELETE'])
+@cross_origin()
 def delete_PostLike():
     try:
         client.admin.command("ping")
@@ -467,6 +489,7 @@ def delete_PostLike():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/DeleteCommentLike', methods=['DELETE'])
+@cross_origin()
 def delete_CommentLike():
     try:
         client.admin.command("ping")
@@ -491,6 +514,7 @@ def delete_CommentLike():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/DeletePost', methods=['DELETE'])
+@cross_origin()
 def delete_post():
     try:
         client.admin.command("ping")
@@ -519,6 +543,7 @@ def delete_post():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/DeleteComment', methods=['DELETE'])
+@cross_origin()
 def delete_Comment():
     try:
         client.admin.command("ping")
@@ -542,8 +567,64 @@ def delete_Comment():
             return jsonify({"message": "Comment not found"}), 404
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+@app.route('/api/username_check', methods=['GET'])
+@cross_origin()
+def get_username():
+    try :
+        db = client["AppDev"]
+        collection = db["User_Account"]
+        data = request.get_json()
 
+        if 'User_Name' not in data :
+            return jsonify({"message": "Please provide User_Name"}), 400
 
+        username = data.get("User_Name")
+
+        userchk = list(collection.find({"User_Name": username}))
+       
+
+        return jsonify(userchk), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/login', methods=['POST'])
+@cross_origin()
+def login():
+    db = client["AppDev"]
+    users = db["User_Account"]
+    auth = request.json
+    if not auth or not auth.get('User_Name') or not auth.get('Password'):
+        return jsonify({'message': 'Could not verify'}), 401
+    
+    username = auth.get('User_Name')
+    password = auth.get('Password')
+    find_user = users.find_one({"User_Name": username})
+    
+    if find_user and find_user["Password"] == password:
+        access_token = create_access_token(identity= find_user["User_ID"])
+        return jsonify(access_token=access_token), 200
+
+    return jsonify({'message': 'Invalid username or password'}), 401
+
+# Example protected route
+@app.route('/protected', methods=['GET'])
+@cross_origin()
+@jwt_required()
+def protected():
+    current_user = get_jwt_identity()  # Get data stored inside the JWT token
+    return jsonify(logged_in_as=current_user), 200
+
+@app.route('/api/alluser', methods=['GET'])
+@cross_origin()
+def get_users():
+    db = client["AppDev"]
+    #ตรง collection อยากให้เปลี่ยนให้ตรงกับชื่อ collection ใน databases มันจะได้เชื่อมกัน เพราะเรามีหลาย collection
+    # ปล. collection คล้ายๆ table แหละ
+    collection = db['User_Account']
+    users = list(collection.find({}))
+    user_names = [user.get("User_Name") for user in users if "User_Name" in user]
+    return jsonify( user_names)
 
 if (__name__ == "__main__") :
     app.run(debug=True, port=5000, host='0.0.0.0')

@@ -11,7 +11,7 @@ const Register = ()=>{
     const [checkUsername , setCheckUsername] = useState([]);
 
     React.useEffect(() => {
-        axios.get(url+"/api/alluser").then((response) => {
+        axios.get(url+"/api/alluser" /*+Username */).then((response) => {
             setCheckUsername(response.data);
         });
       }, []);
@@ -20,14 +20,14 @@ const Register = ()=>{
     const SendRegister = ()=>{
         console.log(checkUsername)
         const chk = checkUsername.filter(u=>{
-            return u == Username.current.value;
+            return u.user_name == Username.current.value;
         })
         console.log(chk)
         // console.log(Username.current.value)
         if(Pass.current.value.length >=8){
             if(Pass.current.value === PassConfirm.current.value && chk.length == 0){
                 const data = {
-                    User_Name:Username.current.value,
+                    UserName:Username.current.value,
                     Password:Pass.current.value
                 }
                 try {

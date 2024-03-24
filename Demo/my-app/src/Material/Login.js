@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import IsLogin from './isLogin'
 
 const Login = () => {
     const [token, setToken] = useState('');
@@ -22,11 +21,6 @@ const Login = () => {
             setLoggedIn(true);
         });
             
-        const response = await axios.get(url+'/protected', {
-            headers: { Authorization: `Bearer ${token}` }
-        });
-        setData(response.data.logged_in_as);
-            localStorage.setItem("isLogin",JSON.stringify(data))
         } catch (error) {
         console.error('Login failed:', error);
         }
@@ -38,7 +32,6 @@ const Login = () => {
             headers: { Authorization: `Bearer ${token}` }
         });
         setData(response.data.logged_in_as);
-        IsLogin(data)
         } catch (error) {
         console.error('Failed to fetch data:', error);
         }
@@ -50,7 +43,6 @@ const Login = () => {
             <div>
             <h2>Welcome, {data}!</h2>
             <button onClick={handleGetData}>Get Protected Data</button>
-            <div>{localStorage.getItem('isLogin')}</div>
             </div>
         ) : (
             <div>
@@ -62,6 +54,5 @@ const Login = () => {
         </div>
     );
 };
-
 
 export default Login;

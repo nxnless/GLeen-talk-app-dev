@@ -46,6 +46,7 @@ def get_users():
     # ปล. collection คล้ายๆ table แหละ
     collection = db['User_Account']
     users = list(collection.find({}))
+    user_data = [{"User_Name": user.get("User_Name")} for user in users]
     return jsonify(users)
 
 
