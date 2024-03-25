@@ -1,0 +1,33 @@
+POST appReport ->       /api/AppReport          AppReportMessage  
+POST postReport ->      /api/PostReport         PostReportMessage
+
+Account
+GET username Check      /api/username_check     User_Name , Password
+POST account            /api/CreateAccount      
+
+Post
+GET AllPost->           /api/GetAllPost
+GET Post by Tag         /api/AllPostByTag
+GET Post_liked          /api/GetPostLiked 🌹
+GET Post by userID      /api/PostByUserID
+POST post_Post ->       /api/InsertPost
+POST like_post->        /api/LikePost
+DELETE delete post      /api/DeletePost
+DELETE Post like        /api/DeletePostLike
+
+Comment
+GET comment by post     /api/GetCommentByPostKey //ใช้อันนี้
+GET comment by post     /api/GetComment 🌹
+POST post_comment->     /api/InsertComment
+POST Like_Comment->     /api/LikeComment
+DELETE Comment like     /api/DeleteCommentLike
+DELETE comment          /api/DeleteComment 🌹
+
+Icon
+GET Icon by UserID      /api/IconByUserID
+GET GetIcon->           /api/GetIcon
+POST post_ICON->        /api/Icon
+
+can u change it to keep input by endpoint
+
+
