@@ -1,11 +1,13 @@
 
 import { Outlet, Link ,Routes , Route ,  BrowserRouter} from "react-router-dom";
+import { useNavigate , useHistory} from 'react-router-dom';
 import HomePage from './HomePage';
 import Login from "./Login";
 import Register from "./Register";
 import MyPost from "./MyPost";
 import Latest from "./Latest";
 import Postbytag from "./PostByTag";
+import InsertPost from "./insertPost";
 function App() {
   return (
     <>
@@ -19,6 +21,7 @@ function App() {
         <Route path="/latest/:token" element={<Latest/>}/>
         <Route path="/getpostbytag/:tag_id" element={< Postbytag />}/>
         <Route path="/getpostbytag/:tag_id/:token" element={<Postbytag/>}/>
+        <Route path="/insertpost/:token" element={< InsertPost />}/>
       </Routes>
       </BrowserRouter>
     </>
