@@ -3,6 +3,7 @@
 import React, { useState ,useEffect} from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router';
+import { useNavigate , useHistory} from 'react-router-dom';
 const MyPost = ()=>{
     const baseURL = "http://127.0.0.1:5000";
     const [allPost,setAllpost ] = useState([]);

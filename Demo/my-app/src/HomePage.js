@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Login from './Login';
+import { useNavigate , useHistory} from 'react-router-dom';
 const HomePage = ()=>{
 
     const lcs = localStorage.getItem('isLogin')

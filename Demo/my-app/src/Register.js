@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import { useNavigate , useHistory} from 'react-router-dom';
 const Register = ()=>{
     const url = "http://127.0.0.1:5000/"
     const Username = React.createRef();
