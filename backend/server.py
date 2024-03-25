@@ -4,7 +4,7 @@ from flask import Flask,request,jsonify,Response
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from flask_cors import CORS , cross_origin
 from pymongo import MongoClient
-
+from pymongo import DESCENDING
 app = Flask(__name__)
 cors = CORS(app) 
 app.config['JWT_SECRET_KEY'] = 'your_secret_key'  # Change this to a secure secret key
@@ -59,7 +59,29 @@ def insert_Account():
         return jsonify({"message": "Register Account successfully", "id": UserID}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
+    
+@app.route('/api/tag', methods=['POST'])
+@cross_origin()
+def add_tag():
+    client.admin.command("ping")
+    db = client["AppDev"]
+    collection = db["Tag"]
+    data = request.get_json()
+    tag_name = data.get('tag_name')
+    try:
+        data = request.get_json()
+        if collection.count_documents({}) == 0:
+            new_data = {"_id": 1, "tag_name": tag_name, "tag_id":  1}
+        else :
+            max_id = collection.find_one(sort=[("_id", -1)])["_id"]
+            new_id = max_id + 1
+            tag_id = new_id
+            new_data = {"_id": new_id, "tag_name": tag_name, "tag_id":  tag_id}
+        collection.insert_one(new_data)
+        return jsonify({'message': 'Data inserted successfully'}), 200
+    except Exception as e:
+        # Handle any errors
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/api/AppReport', methods=['POST'])
 @cross_origin()
@@ -110,7 +132,6 @@ def insert_PostReport():
         return jsonify({"message": "Inserted Report Successfully"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
 
 @app.route('/api/InsertPost', methods=['POST'])
 @cross_origin()
@@ -321,7 +342,6 @@ def get_all_posts():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-
 @app.route('/api/GetComment', methods=['GET'])
 @cross_origin()
 def get_Comments():
@@ -341,22 +361,35 @@ def get_Comments():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# @app.route('/api/AllPostByTag', methods=['GET'])
+# @cross_origin()
+# def get_PostTag():
+#     try :
+#         client.admin.command("ping")
+#         db = client["AppDev"]
+#         collection = db["Post"]
+#         data = request.get_json()
 
-@app.route('/api/AllPostByTag', methods=['GET'])
+#         if 'Tag' not in data :
+#             return jsonify({"message": "Please provide Tag"}), 400
+
+#         Tag = data.get("Tag")
+
+#         posts = list(collection.find({"Tag": Tag}).sort("_id", -1))
+
+#         return jsonify(posts), 200
+#     except Exception as e:
+#         return jsonify({"error": str(e)}), 500
+    
+@app.route('/api/AllPostByTag/<string:tag>', methods=['GET'])
 @cross_origin()
-def get_PostTag():
-    try :
+def get_PostTag(tag):
+    try:
         client.admin.command("ping")
         db = client["AppDev"]
         collection = db["Post"]
-        data = request.get_json()
 
-        if 'Tag' not in data :
-            return jsonify({"message": "Please provide Tag"}), 400
-
-        Tag = data.get("Tag")
-
-        posts = list(collection.find({"Tag": Tag}).sort("_id", -1))
+        posts = list(collection.find({"Tag": tag}).sort("_id", -1))
 
         return jsonify(posts), 200
     except Exception as e:
@@ -444,22 +477,33 @@ def get_IconByUserID():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route('/api/PostByUserID', methods=['GET'])
+# @app.route('/api/PostByUserID', methods=['GET'])
+# @cross_origin()
+# def get_PostByUserID():
+#     try :
+#         client.admin.command("ping")
+#         db = client["AppDev"]
+#         collection = db["Post"]
+#         data = request.get_json()
+#         if  'User_ID' not in data:
+#             return jsonify({"message": "Please provide User_ID"}), 400
+#         User_ID = data.get("User_ID")
+#         posts = list(collection.find({"User_ID" : User_ID}).sort("_id", -1))
+
+#         return jsonify(posts), 200
+#     except Exception as e:
+#         return jsonify({"error": str(e)}), 500
+    
+@app.route('/api/PostByUserID/<string:user_id>', methods=['GET'])
 @cross_origin()
-def get_PostByUserID():
-    try :
+def get_PostByUserID(user_id):
+    try:
         client.admin.command("ping")
         db = client["AppDev"]
         collection = db["Post"]
-        data = request.get_json()
-
-        if  'User_ID' not in data:
-            return jsonify({"message": "Please provide User_ID"}), 400
-
-        User_ID = data.get("User_ID")
-
-        posts = list(collection.find({"User_ID" : User_ID}).sort("_id", -1))
-
+        
+        posts = list(collection.find({"User_ID": user_id}).sort("_id", -1))
+        
         return jsonify(posts), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -625,6 +669,45 @@ def get_users():
     users = list(collection.find({}))
     user_names = [user.get("User_Name") for user in users if "User_Name" in user]
     return jsonify( user_names)
+
+app.route('/api/SortedPosts', methods=['GET'])
+@cross_origin()
+def get_sorted_posts():
+    try:
+        client.admin.command("ping")
+        db = client["AppDev"]
+        collection = db["Posts"]  # Assuming the collection name is 'Posts'
+
+        # Retrieve posts with calculated sum of like_count and comment_count,
+        # and sort them in descending order by the sum
+        sorted_posts = collection.aggregate([
+            {
+                "$addFields": {
+                    "total_activity": { "$add": ["$like_count", "$comment_count"] }
+                }
+            },
+            {
+                "$sort": {"total_activity": DESCENDING}
+            }
+        ])
+
+        # Convert the cursor to a list of dictionaries
+        sorted_posts = list(sorted_posts)
+
+        return jsonify(sorted_posts), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+@app.route('/api/tag', methods=['GET'])
+@cross_origin()
+def get_tag():
+    client.admin.command("ping")
+    db = client["AppDev"]
+    collection = db["Tag"]
+    Tag = list(collection.find({}))
+    return jsonify(Tag)
+
 
 if (__name__ == "__main__") :
     app.run(debug=True, port=5000, host='0.0.0.0')

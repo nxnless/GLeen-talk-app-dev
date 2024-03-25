@@ -2,7 +2,7 @@ POST appReport ->       /api/AppReport          AppReportMessage
 POST postReport ->      /api/PostReport         PostReportMessage
 
 Account
-GET username Check      /api/username_check     User_Name , User_ID , Password
+GET username Check      /api/username_check     User_Name , Password
 POST account            /api/CreateAccount      
 
 Post
@@ -27,4 +27,7 @@ Icon
 GET Icon by UserID      /api/IconByUserID
 GET GetIcon->           /api/GetIcon
 POST post_ICON->        /api/Icon
+
+can u change it to keep input by endpoint
+
 

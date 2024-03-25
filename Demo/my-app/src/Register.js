@@ -40,7 +40,7 @@ const Register = ()=>{
                 
                 console.log(data)
                 showError("")
-                // window.location.reload(false);
+                window.location.reload(false);
             }
             else if(chk.length >0){
                 showError("username is used")
