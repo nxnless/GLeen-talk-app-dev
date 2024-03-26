@@ -3,14 +3,28 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Login from './Login';
-import { useNavigate , useHistory} from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 const HomePage = ()=>{
+    const navigate = useNavigate();
+    const para = useParams();
+    const token = para.token;
+    const gotolatestpolst = ()=>{
+        navigate("/latest/"+token)
+    }
 
-    const lcs = localStorage.getItem('isLogin')
-    
+    const gotoinsertpost = ()=>{
+        navigate("/insertpost/"+token)
+    }
+
+    const gotomypost = ()=>{
+        navigate("/mypost/"+token)
+    }
     return (
         <>
-        
+            <h1 onClick={gotolatestpolst}>Latest</h1>
+            <h1 onClick={gotoinsertpost}>insertPost</h1>
+            <h1 onClick={gotomypost}>mypost</h1>
         </>
     )
 }

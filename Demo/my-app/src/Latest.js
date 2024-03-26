@@ -73,7 +73,7 @@ const Latest = ()=>{
     <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', padding: '0 10px' }}>
         {Array.isArray(Tag) && Tag.map(t => (
             <div key={t._id}>
-                <div  onClick={() => ChangPageToTagPost(t.tag_id)}>{t.tag_name}</div>
+                <div  onClick={() => ChangPageToTagPost(t.tag_name)}>{t.tag_name}</div>
             </div>
         ))}
     </div>

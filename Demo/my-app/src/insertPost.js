@@ -60,10 +60,12 @@ const InsertPost = ()=>{
         try {
             axios.post(baseURL+"/api/InsertPost",data).then((response) => {
                 setRegisState(response.data);
+           
             });
-            }catch (error) {
+        }catch (error) {
                 console.error('Error fetching data:', error);
-            }
+        }
+        window.location.reload(false);
     }
 
 

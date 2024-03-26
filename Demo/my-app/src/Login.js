@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import IsLogin from './isLogin'
-import { useNavigate , useHistory} from 'react-router-dom';
+
+import { useNavigate} from 'react-router-dom';
 const Login = () => {
     const [token, setToken] = useState('');
     const [data,setData] = useState('');
@@ -20,7 +20,7 @@ const Login = () => {
         axios.post(url+'/login',login).then((response) => {
             setToken(response.data.access_token);
             // Chage here to go to home page (latest)
-            navigate("/mypost/"+response.data.access_token);
+            navigate("/homepage/"+response.data.access_token);
             setLoggedIn(true);
         });
             
@@ -40,12 +40,14 @@ const Login = () => {
             headers: { Authorization: `Bearer ${token}` }
         });
         setData(response.data.logged_in_as);
-        IsLogin(data)
         } catch (error) {
         console.error('Failed to fetch data:', error);
         }
     };
 
+    const gotoRegister = ()=>{
+        navigate("/register/")
+    }
     return (
         <div>
         {loggedIn ? (
@@ -58,6 +60,7 @@ const Login = () => {
             <input type="text" name = "username" placeholder="Username" ref={Username}  />
             <input type="password" name="password" placeholder="Password" ref={Pass} />
             <button onClick={handleLogin}>Login</button>
+                <div onClick={gotoRegister}>Register</div>
             </div>
         )}
         </div>
