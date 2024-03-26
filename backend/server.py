@@ -116,7 +116,7 @@ def insert_PostReport():
         db = client["AppDev"]
         collection = db["Post_report"]
         data = request.get_json()
-
+        collectionIcon = db["Icon"]
         if 'PostReportMessage' not in data :
             return jsonify({"message": "Please fill in all fields"}), 400
 
@@ -141,7 +141,7 @@ def insert_Post():
         db = client["AppDev"]
         collection = db["Post"]
         data = request.get_json()
-
+        collectionIcon = db["Icon"]
         if 'Tag' not in data  or  "Text_Post" not in data or "User_ID" not in data  :
             return jsonify({"message": "Please fill in all fields"}), 400
 
@@ -161,6 +161,8 @@ def insert_Post():
             max_id = collection.find_one(sort=[("_id", -1)])["_id"]
             new_id = max_id + 1
             new_data = {"_id": new_id, "Tag": Tag, "Post_Key": new_id, "Text_Post": Text_Post, "User_ID": User_ID, "Comment_Count": 0,"Like_Post" : 0}
+        data_insert_icon = {"Post_Key":new_id , "User_ID":User_ID , "Icon_ID":1}
+        result = collectionIcon.insert_one(data_insert_icon)
         result = collection.insert_one(new_data)
         return jsonify({"message": "Inserted Post Successfully"}), 200
     except Exception as e:
@@ -174,24 +176,35 @@ def insert_Comment():
         db = client["AppDev"]
         collection = db["Comment"]
         data = request.get_json()
-
+        collectionIcon = db["Icon"]
+        
         if 'User_ID' not in data or "Text_Comment" not in data or "Post_Key" not in data:
             return jsonify({"message": "Please fill in all fields"}), 400
         User_ID = data.get("User_ID")
         Text_Comment = data.get("Text_Comment")
         Post_Key = data.get("Post_Key")
-
+        iconcheck =  collectionIcon.find_one({"Post_Key":Post_Key ,"User_ID":User_ID})
+        if iconcheck:
+            icon_id = iconcheck["Icon_ID"]
+        else:
+            iconcheck = collectionIcon.find_one({"Post_Key": Post_Key})
+            if iconcheck:
+                icon_id = collectionIcon.count_documents({"Post_Key": Post_Key}) + 1
+            else:
+                icon_id = 1  # If no icons found for the post_key, set icon_id t
+            data_insert_icon = {"Post_Key":Post_Key , "User_ID":User_ID , "Icon_ID":icon_id}
+            result = collectionIcon.insert_one(data_insert_icon)
         user_collection = db["User_Account"]
         user = user_collection.find_one({"User_ID": User_ID})
         if not user:
             return jsonify({"message": "User_ID not found"}), 404
 
         if collection.count_documents({}) == 0:
-            new_data = {"_id": 1, "User_ID": User_ID, "Comment_Key": 1, "Text_Comment": Text_Comment, "Post_Key": Post_Key,"Like_Comment": 0}
+            new_data = {"_id": 1, "User_ID": User_ID, "Comment_Key": 1, "Text_Comment": Text_Comment, "Post_Key": Post_Key,"Like_Comment": 0 ,"Icon_id":icon_id}
         else :
             max_id = collection.find_one(sort=[("_id", -1)])["_id"]
             new_id = max_id + 1
-            new_data = {"_id": new_id,"User_ID": User_ID, "Comment_Key": new_id, "Text_Comment": Text_Comment, "Post_Key": Post_Key,"Like_Comment": 0}
+            new_data = {"_id": new_id,"User_ID": User_ID, "Comment_Key": new_id, "Text_Comment": Text_Comment, "Post_Key": Post_Key,"Like_Comment": 0 ,"Icon_id":icon_id}
 
         result = collection.insert_one(new_data)
         
