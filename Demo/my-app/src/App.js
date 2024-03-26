@@ -13,14 +13,14 @@ function App() {
     <>
       <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomePage/>}/>
-        <Route path="/login" element = {<Login/>}/>
+        <Route path="/homepage/:token" element={<HomePage/>}/>
+        <Route path="/" element = {<Login/>}/>
         <Route path="/register" element= {<Register/>}/>
         <Route path="/mypost/:token" element={<MyPost/>}/>
         <Route path="/latest" element={<Latest/>}/>
         <Route path="/latest/:token" element={<Latest/>}/>
-        <Route path="/getpostbytag/:tag_id" element={< Postbytag />}/>
-        <Route path="/getpostbytag/:tag_id/:token" element={<Postbytag/>}/>
+        <Route path="/getpostbytag/:tag_name" element={< Postbytag />}/>
+        <Route path="/getpostbytag/:tag_name/:token" element={<Postbytag/>}/>
         <Route path="/insertpost/:token" element={< InsertPost />}/>
       </Routes>
       </BrowserRouter>
