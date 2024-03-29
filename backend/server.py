@@ -709,6 +709,21 @@ def get_tag():
     return jsonify(Tag)
 
 
+@app.route('/api/AllPostByTrend', methods=['GET'])
+@cross_origin()
+def get_all_post_by_trend():
+    try:
+        client.admin.command("ping")
+        db = client["AppDev"]
+        collection = db["Post"]
+
+        all_posts = list(collection.find().sort([("Like_Post", -1), ("Comment_Count", -1)]))
+
+        return jsonify(all_posts), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 if (__name__ == "__main__") :
     app.run(debug=True, port=5000, host='0.0.0.0')
 
