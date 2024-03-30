@@ -14,11 +14,22 @@ const ReadComment = ()=>{
     const [Tag , setTag] = useState('');
     const [User_ID,setUserID] = useState('');
     const [allComment,setAllComment] = useState('');
+    const [inputValue, setInputValue] = useState('');
 
     //Normal Get
     const para  = useParams();
     const token = para.token;
     const one_post = para.post_key;
+
+    const getAllPost = async () => {
+        try {
+            const response = await axios.get(baseURL +'/api/GetOnePost/'+one_post);
+            setPost(response.data);
+            // console.log(response.data);
+        } catch (error) {
+            console.error('Error fetching posts:', error);
+        }
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -44,56 +55,36 @@ const ReadComment = ()=>{
     }, []); // Empty dependency array means this effect runs only once when the component mounts
     
     useEffect(() => {
-        const getAllPost = async () => {
-            try {
-                const response = await axios.get(baseURL +'/api/GetOnePost/'+one_post);
-                setPost(response.data);
-                console.log(response.data);
-            } catch (error) {
-                console.error('Error fetching posts:', error);
-            }
-        };
-    
         const getAllTag = async () => {
             try {
                 const response = await axios.get(baseURL + '/api/tag');
                 setTag(response.data);
-                console.log(response.data);
+                // console.log(response.data);
             } catch (error) {
                 console.error('Error fetching tags:', error);
             }
         };
-    
+      
         getAllPost();
         getAllTag();
     }, []); // Empty dependency array means this effect runs only once when the component mounts
    
-    console.log(Post.Post_Key)
     const getComment = async () => {
         try {
-            const response = await axios.get(baseURL + '/api/GetCommentByPostKey/'+Post.Post_Key);
+            const response = await axios.get(baseURL + '/api/GetComment/'+one_post);
             setAllComment(response.data);
-            console.log(response.data);
+            // console.log(response.data);
         } catch (error) {
             console.error('Error fetching posts:', error);
         }
     };
 
     useEffect(() => {
-        const getComment = async () => {
-            try {
-                const response = await axios.get(baseURL +'/api/GetComment/'+Post.Post_Key);
-                setAllComment(response.data);
-                console.log(response.data);
-            } catch (error) {
-                console.error('Error fetching posts:', error);
-            }
-        };
         getComment();
-        console.log(allComment);
+        // console.log(allComment);
     }, []); // Emp
 
-    console.log(allComment);
+    // console.log(allComment);
     const sendComment = () =>{
         const data = {
             Text_Comment:TextComment.current.value,
@@ -108,9 +99,20 @@ const ReadComment = ()=>{
         }catch (error) {
                 console.error('Error fetching data:', error);
         }
+        setInputValue('');
+        // Focus the input field after clearing (optional)
+        TextComment.current.focus();
         getComment();
+        getComment();
+        getComment();
+        getAllPost();
+        getAllPost();
+        getAllPost();
     }
 
+    const handleInputChange = (event) => {
+        setInputValue(event.target.value);
+    }
  // Access the first (and only) element in the array
     const pnd = <div key={Post._id}>
                 <p>tag = {Post.Tag}</p>
@@ -127,12 +129,8 @@ const ReadComment = ()=>{
     if (Array.isArray(allComment)) {
         commentInThisPost = allComment.map(p => (
             <div key={p._id}>
-                <p>tag = {p.Tag}</p>
-                <p>Post_Key = {p.Post_Key}</p>
-                <p>Text = {p.Text_Post}</p>
-                <p>User_Id = {p.User_ID}</p>
-                <p>{p.Like_Post}</p>
-            
+                <p>Icon = {p.Icon_id}</p>
+                <p>Text = {p.Text_Comment}</p>
             </div>
         ))
     }
@@ -140,7 +138,9 @@ const ReadComment = ()=>{
     return (
         <>  <div>{pnd}</div>
             <div>
-                <input type = 'text' ref = {TextComment} placeholder='Post Something'/>
+                <input type = 'text' ref = {TextComment} placeholder='Post Something' 
+                value={inputValue} 
+                onChange={handleInputChange} />
                 <button onClick={sendComment.bind()} >Submit</button>  
             </div>
             <div>
