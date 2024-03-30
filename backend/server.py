@@ -18,10 +18,6 @@ uri = "mongodb+srv://nonnon2546:6qVqQW86EA83OSV3@cluster0.9yz02fk.mongodb.net"
 # Create a new client and connect to the server
 client = pymongo.MongoClient(uri)
 
-# Auth
-# app.config['BASIC_AUTH_USERNAME'] = 'AppDev'
-# app.config['BASIC_AUTH_PASSWORD'] = '1234AppDev'
-# basic_auth = BasicAuth(app)
 
 @app.route("/")
 def hello_world():
@@ -173,6 +169,7 @@ def insert_Comment():
         client.admin.command("ping")
         db = client["AppDev"]
         collection = db["Comment"]
+        Icon_collection = db["Icon"]
         data = request.get_json()
 
         if 'User_ID' not in data or "Text_Comment" not in data or "Post_Key" not in data:
@@ -342,45 +339,40 @@ def get_all_posts():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route('/api/GetComment', methods=['GET'])
+@app.route('/api/GetComment/<int:post_key>', methods=['GET'])
 @cross_origin()
-def get_Comments():
-    try :
+def get_Comments(post_key):
+    try:
         client.admin.command("ping")
         db = client["AppDev"]
         collection = db["Comment"]
-        data = request.get_json()
 
-        if 'Post_Key' not in data :
-            return jsonify({"message": "Please provide Post_Key"}), 400
-
-        Post_Key = data.get("Post_Key")
-
-        comments = list(collection.find({"Post_Key": Post_Key}))
+        comments = list(collection.find({"Post_Key": post_key}))
         return jsonify(comments), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# @app.route('/api/AllPostByTag', methods=['GET'])
-# @cross_origin()
-# def get_PostTag():
-#     try :
-#         client.admin.command("ping")
-#         db = client["AppDev"]
-#         collection = db["Post"]
-#         data = request.get_json()
 
-#         if 'Tag' not in data :
-#             return jsonify({"message": "Please provide Tag"}), 400
+@app.route('/api/GetOnePost/<int:post_key>', methods=['GET'])
+@cross_origin()
+def Get_onPost(post_key):
+    try:
+        client.admin.command("ping")
+        db = client["AppDev"]
+        collection = db["Post"]
 
-#         Tag = data.get("Tag")
+        # Search for a document based on Post_Key
+        post = collection.find_one({"Post_Key": post_key})
 
-#         posts = list(collection.find({"Tag": Tag}).sort("_id", -1))
+        if post is None:
+            return jsonify({"message": "No post found for the given Post_Key"}), 404
 
-#         return jsonify(posts), 200
-#     except Exception as e:
-#         return jsonify({"error": str(e)}), 500
-    
+        # Assuming you want to return the found post
+        return jsonify(post), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 @app.route('/api/AllPostByTag/<string:tag>', methods=['GET'])
 @cross_origin()
 def get_PostTag(tag):
@@ -476,23 +468,6 @@ def get_IconByUserID():
         return jsonify(Icon), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
-# @app.route('/api/PostByUserID', methods=['GET'])
-# @cross_origin()
-# def get_PostByUserID():
-#     try :
-#         client.admin.command("ping")
-#         db = client["AppDev"]
-#         collection = db["Post"]
-#         data = request.get_json()
-#         if  'User_ID' not in data:
-#             return jsonify({"message": "Please provide User_ID"}), 400
-#         User_ID = data.get("User_ID")
-#         posts = list(collection.find({"User_ID" : User_ID}).sort("_id", -1))
-
-#         return jsonify(posts), 200
-#     except Exception as e:
-#         return jsonify({"error": str(e)}), 500
     
 @app.route('/api/PostByUserID/<string:user_id>', methods=['GET'])
 @cross_origin()
@@ -669,35 +644,6 @@ def get_users():
     users = list(collection.find({}))
     user_names = [user.get("User_Name") for user in users if "User_Name" in user]
     return jsonify( user_names)
-
-app.route('/api/SortedPosts', methods=['GET'])
-@cross_origin()
-def get_sorted_posts():
-    try:
-        client.admin.command("ping")
-        db = client["AppDev"]
-        collection = db["Posts"]  # Assuming the collection name is 'Posts'
-
-        # Retrieve posts with calculated sum of like_count and comment_count,
-        # and sort them in descending order by the sum
-        sorted_posts = collection.aggregate([
-            {
-                "$addFields": {
-                    "total_activity": { "$add": ["$like_count", "$comment_count"] }
-                }
-            },
-            {
-                "$sort": {"total_activity": DESCENDING}
-            }
-        ])
-
-        # Convert the cursor to a list of dictionaries
-        sorted_posts = list(sorted_posts)
-
-        return jsonify(sorted_posts), 200
-
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
     
 @app.route('/api/tag', methods=['GET'])
 @cross_origin()
