@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate , useHistory} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Tag from './Component/Tag';
+import TaskBar from './Component/TaskBar';
+import './Component/Register.css'
+
 const Register = ()=>{
     const url = "http://127.0.0.1:5000/"
     const Username = React.createRef();
     const Pass = React.createRef();
     const PassConfirm = React.createRef();
+    const navigate = useNavigate();
     const [RegisState , setRegisState] = useState(null);
     const [textError , showError] = useState('')
     const [checkUsername , setCheckUsername] = useState([]);
@@ -40,7 +45,7 @@ const Register = ()=>{
                 
                 console.log(data)
                 showError("")
-                window.location.reload(false);
+                navigate("/login");
             }
             else if(chk.length >0){
                 showError("username is used")
@@ -57,16 +62,35 @@ const Register = ()=>{
 
     return (
         <>
-            <div>
-                <input type = 'text' name = 'Username' ref = {Username} placeholder='Username'/>
-                <input type = 'text' name = 'Pass' ref = {Pass} placeholder='Password'/>
-                <input type = 'text' name = 'PassConfirm' ref = {PassConfirm} placeholder='Confirm Password'/>
-                <button onClick={ SendRegister.bind()  }>Submit</button>  
-                <div>
-                   {textError}
+        <TaskBar/>
+            <div class="wrapper">
+                <div class="from-box ">
+                <h2  style={{ marginTop: '-85px', marginRight:'50px'}}>Registration</h2>
+                <div style={{ marginTop: '60px', marginRight:'50px'}}>
+                    <div class="input-box">
+                    <input type="username" ref = {Username} required/>
+                    <label style={{ marginTop: '-10px'}}>Username</label>
+                    </div>
+                    <div class="input-box">
+                    <input type="password" ref = {Pass} required/>
+                    <label style={{ marginTop: '-10px'}}>Password</label>
+                    </div>
+                    <div class="input-box">
+                    <input type="password" ref = {PassConfirm} required/>
+                    <label style={{ marginTop: '-10px' , marginLeft:'35px'}}>Confrim Password</label>
+                    </div>
+                    <div class="remember-forgot">
+                    <label><input type="checkbox"/>
+                        I agree to the terms & conditions</label>
+                    </div>
+                    <button type="submit" class="btn" style={{ marginTop: '-10px'}} onClick={ SendRegister.bind()} >Register</button>
+                    <div class="login-register" >
+                    <p>Already have an account? <a href="/login" class="login-link">Login</a></p>
+                    <p>{textError}</p>
+                    </div>
                 </div>
-            </div>
-           
+                </div>
+           </div>
         </>
     )
 }

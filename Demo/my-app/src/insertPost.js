@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
-
+import './Component/InsertPost.css';
+import Tag from './Component/Tag';
+import TaskBar from './Component/TaskBar';
 const InsertPost = ()=>{
     const baseURL = "http://127.0.0.1:5000/"
     const TextPost = React.createRef();
-    const [RegisState , setRegisState] = useState(null);
     const [userID,setUserID] = useState('');
     const [allTag , setTag] = useState([]);
     const para  = useParams();
+    const navigate = useNavigate();
     const token = para.token
     const [selectedOption, setSelectedOption] = useState("General");
     React.useEffect(() => {
@@ -19,19 +21,32 @@ const InsertPost = ()=>{
       }, []
       );
     console.log(allTag);
-
-    const handleGetData = async () => {
+    const GotoHomePage = ()=>{
+        navigate("/homepage/" +token)
+    }
+    const fetchData = async () => {
         try {
-        const response = await axios.get(baseURL+'/protected', {
-            headers: { Authorization: `Bearer ${token}` }
-        });
-            setUserID(response.data.logged_in_as);
+            const response = await axios.get(baseURL+'/protected', {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            // If response is not empty or null, update userID state
+            if (response && response.data && response.data.logged_in_as) {
+                setUserID(response.data.logged_in_as);
+                console.log(response.data.logged_in_as)
+            } else {
+                console.log('Response is empty or not as expected.');
+                setUserID(null)
+            }
         } catch (error) {
-        console.error('Failed to fetch data:', error);
+            console.error('Failed to fetch data:', error);
         }
     };
-    handleGetData();
-    console.log(userID);
+
+    useEffect(() => {
+        fetchData();
+    }); 
+
 
     const handleSelectChange = (event) => {
         setSelectedOption(event.target.value);
@@ -40,13 +55,11 @@ const InsertPost = ()=>{
 
     let tagElements = 
     <div>
-      <h2>Select an Tag:</h2>
-      <select value={selectedOption} onChange={handleSelectChange}>
-        {Array.isArray(allTag) && allTag.map(t => (
-            <option value={t.tag_name}>{t.tag_name}</option>
-        ))}
-      </select>
-      <p>Selected option: {selectedOption}</p>
+        <select className="custom-select" value={selectedOption} onChange={handleSelectChange}>
+            {Array.isArray(allTag) && allTag.map(t => (
+                <option key={t.tag_name} value={t.tag_name}>{t.tag_name}</option>
+            ))}
+            </select>
     </div>
 
     
@@ -59,25 +72,31 @@ const InsertPost = ()=>{
         console.log(data);
         try {
             axios.post(baseURL+"/api/InsertPost",data).then((response) => {
-                setRegisState(response.data);
-           
             });
         }catch (error) {
                 console.error('Error fetching data:', error);
         }
-        window.location.reload(false);
+        GotoHomePage();
     }
 
 
     return (
         <>
-            <div>
-                <input type = 'text' name = 'Username' ref = {TextPost} placeholder='Post Something'/>
-                <button onClick={sendPost.bind()} >Submit</button>  
-                {userID}
-                {tagElements}
+        <Tag/>
+        <TaskBar/>
+            <diV>{tagElements}</diV>
+            <div class="Post-Font">
+            <h1>POST</h1>
             </div>
-           
+                <div class="container-form">
+                    <form action="">
+                    <textarea class="input-form" ref = {TextPost} rows="3" placeholder="Typing..."></textarea>
+                    </form>
+                </div>
+                <div class="container-button">
+                    <a type="submit" class="btn" onClick={GotoHomePage}>Back to Feed</a>
+                    <a type="submit" class="btn" onClick={sendPost.bind()}>Post</a>
+            </div>
         </>
     )
 }

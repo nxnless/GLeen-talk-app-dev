@@ -1,0 +1,213 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url(images/bg.png);
+  }
+
+  .float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 40px;
+    right: 40px;
+    background-color: #bee4a0;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+  }
+
+  .header {
+    background-image: url(images/green.png);
+    color: black;
+    font-family: "Noto Serif Thai", serif;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    width: 50px;
+    height: 50px;
+  }
+
+  .text_l {
+    font-size: 22px;
+    font-weight: bolder;
+    position: relative;
+    right: 38.7%;
+  }
+
+  .text_r {
+    font-size: 20px;
+    margin-right: 10px;
+  }
+
+  .text_r a {
+    margin-right: 10px;
+    color: black;
+    text-decoration: none;
+  }
+
+  .menu {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+  }
+
+  .menu div {
+    flex: 1;
+    text-align: center;
+  }
+
+  .last {
+    font-size: 22px;
+    font-weight: bolder;
+    position: relative;
+    right: 38.7%;
+  }
+
+
+
+  .button-feed {
+    background-color: #fffff0;
+    border: 1px solid #000000;
+    color: #333;
+    padding: 8px 8px;
+    text-align: center;
+    display: inline-block;
+    margin: 1%;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 50px;
+  }
+
+  .button-feed:hover {
+    background-color: #ddd;
+  }
+
+  .box-post {
+    margin-top: 5%;
+  }
+
+  .container-post {
+    width: 100%;
+    max-width: 960px;
+    height: auto;
+    margin: 0 auto;
+    background: #FFFFFF;
+    padding: 20px;
+    border: 1px solid #000000;
+    border-radius: 30px;
+  }
+
+
+  h4 {
+    color: #808080;
+  }
+
+  .report-button {
+    display: flex;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    margin-left: auto;
+  }
+
+  .likebutton {
+    width: 40px;
+    height: 40px;
+    background-color: #FFFFFF;
+    cursor: pointer;
+    border: 0;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+
+  .sentbutton {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    border: 0;
+    background-color: #bee4a0;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+  }
+
+  .box-comment {
+    margin-top: 1%;
+  }
+
+  .box-last-comment {
+    margin-bottom: 5%;
+  }
+
+  h3 {
+    text-align: center;
+  }
+
+  .container-comment {
+    width: 100%;
+    max-width: 960px;
+    height: auto;
+    margin: 0 auto;
+    background: #FFFFFF;
+    padding: 20px;
+    border: 1px solid #000000;
+    border-radius: 30px;
+    margin-top: 4px;
+  }
+
+  .comment-form {
+    width: 40px;
+    height: 40px;
+  }
+
+  .float-form {
+    position: fixed;
+    width: 880px;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #bee4a0;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .float-sent {
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    bottom: 0px;
+    right: 5px;
+    margin-left: 0px;
+    background-color: #FFFFFF;
+    color: #FFF;
+    text-align: center;
+  }
+
+  .container-form {
+    position: relative;
+    bottom: 0px;
+    width: 700px;
+    height: 20px;
+    display: flex;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+  }
+
+  .input-form {
+    width: 700px;
+    height: 40px;
+    border: 1px solid #000000;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    font-size: 14;
+    padding: 20px;
+  }

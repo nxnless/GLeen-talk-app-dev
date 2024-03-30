@@ -14,8 +14,10 @@ function App() {
     <>
       <BrowserRouter>
       <Routes>
+        <Route path="/homepage/" element={<HomePage/>}/>
         <Route path="/homepage/:token" element={<HomePage/>}/>
         <Route path="/" element = {<Login/>}/>
+        <Route path="/login" element = {<Login/>}/>
         <Route path="/register" element= {<Register/>}/>
         <Route path="/mypost/:token" element={<MyPost/>}/>
         <Route path="/latest" element={<Latest/>}/>

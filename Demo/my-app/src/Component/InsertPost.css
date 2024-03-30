@@ -1,0 +1,116 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url(images/bg.png);
+  }
+
+  .header {
+    background-image: url(images/green.png);
+    color: black;
+    font-family: "Noto Serif Thai", serif;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    width: 50px;
+    height: 50px;
+  }
+
+  .text_l {
+    font-size: 22px;
+    font-weight: bolder;
+    position: relative;
+    right: 38.7%;
+  }
+
+  .text_r {
+    font-size: 20px;
+    margin-right: 10px;
+  }
+
+  .text_r a {
+    margin-right: 10px;
+    color: black;
+    text-decoration: none;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  .container-form {
+    position: relative;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 200px;
+    background: #FFFFFF;
+    display: flex;
+    border-radius: 50px;
+    margin-top: 60px;
+  }
+
+  .input-form {
+    width: 800px;
+    height: 400px;
+    border: 1px solid #000000;
+    border-radius: 20px;
+    font-size: 30px; /* corrected from font-size: 14; */
+    padding: 20px;
+     /* Adjust this value as needed */
+}
+
+
+  .container-button {
+    position: relative;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 70px;
+    justify-content: flex-end;
+    display: flex;
+  }
+
+  .btn {
+    width: 150px;
+    height: 45px;
+    background: #bee4a0;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    color: #000000;
+    font-weight: bold;
+    text-align: center;
+    margin-left: 30px;
+    margin-top: 120px;
+    line-height: 45px;
+    text-decoration: none;
+  }
+
+ .custom-select {
+  appearance: none;
+  padding: 8px 12px;
+  font-size: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  cursor: pointer;
+  margin-top: 80px;
+  margin-left: 1100px; /* Adjust this value to move it left */
+}
+
+.custom-select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+  

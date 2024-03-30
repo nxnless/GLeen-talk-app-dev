@@ -5,6 +5,7 @@ import axios from 'axios';
 import Login from './Login';
 import { useNavigate} from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import TaskBar from './Component/TaskBar';
 const HomePage = ()=>{
     const navigate = useNavigate();
     const para = useParams();
@@ -22,6 +23,7 @@ const HomePage = ()=>{
     }
     return (
         <>
+            <TaskBar/>
             <h1 onClick={gotolatestpolst}>Latest</h1>
             <h1 onClick={gotoinsertpost}>insertPost</h1>
             <h1 onClick={gotomypost}>mypost</h1>
