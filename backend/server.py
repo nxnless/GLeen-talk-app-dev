@@ -112,7 +112,7 @@ def insert_PostReport():
         db = client["AppDev"]
         collection = db["Post_report"]
         data = request.get_json()
-
+        collectionIcon = db["Icon"]
         if 'PostReportMessage' not in data :
             return jsonify({"message": "Please fill in all fields"}), 400
 
@@ -137,7 +137,7 @@ def insert_Post():
         db = client["AppDev"]
         collection = db["Post"]
         data = request.get_json()
-
+        collectionIcon = db["Icon"]
         if 'Tag' not in data  or  "Text_Post" not in data or "User_ID" not in data  :
             return jsonify({"message": "Please fill in all fields"}), 400
 
@@ -157,6 +157,8 @@ def insert_Post():
             max_id = collection.find_one(sort=[("_id", -1)])["_id"]
             new_id = max_id + 1
             new_data = {"_id": new_id, "Tag": Tag, "Post_Key": new_id, "Text_Post": Text_Post, "User_ID": User_ID, "Comment_Count": 0,"Like_Post" : 0}
+        data_insert_icon = {"Post_Key":new_id , "User_ID":User_ID , "Icon_ID":1}
+        result = collectionIcon.insert_one(data_insert_icon)
         result = collection.insert_one(new_data)
         return jsonify({"message": "Inserted Post Successfully"}), 200
     except Exception as e:
