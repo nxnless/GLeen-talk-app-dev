@@ -552,6 +552,7 @@ def delete_post():
         comment_collection = db["Comment"]
         post_liked_collection = db["Post_liked"]
         comment_liked_collection = db["Comment_liked"]
+        Icon_collection = db["Icon"]
         data = request.get_json()
 
         if 'Post_Key' not in data:
@@ -566,6 +567,8 @@ def delete_post():
         post_liked_collection.delete_many({"Post_Key": Post_Key})
 
         comment_liked_collection.delete_many({"Post_Key": Post_Key})
+
+        Icon_collection.delete_many({"Post_Key": Post_Key})
 
         return jsonify({"message": "Deleted Post and Associated Data Successfully"}), 200
     except Exception as e:
