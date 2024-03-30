@@ -8,6 +8,7 @@ import MyPost from "./MyPost";
 import Latest from "./Latest";
 import Postbytag from "./PostByTag";
 import InsertPost from "./insertPost";
+import ReadComment from "./readcomment";
 function App() {
   return (
     <>
@@ -22,6 +23,7 @@ function App() {
         <Route path="/getpostbytag/:tag_name" element={< Postbytag />}/>
         <Route path="/getpostbytag/:tag_name/:token" element={<Postbytag/>}/>
         <Route path="/insertpost/:token" element={< InsertPost />}/>
+        <Route path="/comment/:post_key/:token" element={< ReadComment />}/>
       </Routes>
       </BrowserRouter>
     </>
