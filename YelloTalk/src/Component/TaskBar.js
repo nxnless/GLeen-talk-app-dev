@@ -48,15 +48,34 @@ const TaskBar = ()=>{
       const GotoHomePage = ()=>{
         navigate("/homepage/" +token)
     }
+
+    const GotoAppReport = ()=>{
+        navigate("/appreport")
+    }
+
+    const GotoTrend = ()=>{
+        navigate("/trend/" +token)
+    }
     return (
         <>
             <div class="header">
                 <div class="logo" onClick={GotoHomePage}>
                 
-                    <img src={('/images/logo_w60.png')} alt="Logo"/>
+                    <img src={('https://scontent-bkk1-1.xx.fbcdn.net/v/t39.30808-6/433054557_723093289986758_3451699542292854960_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_ohc=RIrvmCUzk-IAX-bvaUQ&_nc_ht=scontent-bkk1-1.xx&oh=00_AfC8hslWezZ0IvwWWUj4Om__b5dlTsB2iFtFSYv-yjXxBg&oe=660E0FDB')} alt="Logo"/>
                 </div>
-            <div class="text_l" onClick={GotoHomePage}>
-                Gleen Talk
+                <div class="text_l">  
+                <a>
+                   <a onClick={GotoHomePage}>   Gleen Talk  </a>
+
+                    <a onClick={GotoAppReport}>&nbsp;AppReport   </a>
+                </a>
+                   
+                </div>
+            <div class = "middle"  onClick={GotoHomePage}>
+                Latest
+            </div>
+            <div class = "middle" onClick={GotoTrend}>
+                Trend
             </div>
             <div class="text_r">
                 <a onClick={GotoMyPost}>My Post</a>

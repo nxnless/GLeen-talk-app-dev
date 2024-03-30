@@ -40,7 +40,8 @@ body {
     font-size: 22px;
     font-weight: bolder;
     position: relative;
-    right: 38.7%;
+    margin-left: 550px;
+    margin-top: 10px;
   }
 
   .text_c {
@@ -190,6 +191,14 @@ body {
     color: #999;
   }
 
+  .middle{
+    position: relative;
+    right: 440px;
+    top:3px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
   .text-container {
     white-space: normal;
     hyphens: auto;
@@ -211,3 +220,4 @@ body {
     width: 40px;
     height: 40px;
   }
+

@@ -20,7 +20,6 @@ const InsertPost = ()=>{
         });
       }, []
       );
-    console.log(allTag);
     const GotoHomePage = ()=>{
         navigate("/homepage/" +token)
     }

@@ -27,6 +27,10 @@ const Latest = ()=>{
         }
     };
 
+    const ReportPost = async (p_key) =>{
+        navigate("/postreport/"+p_key);;
+    }
+
     useEffect(() => {
         getAllPost();
     }, []);
@@ -130,8 +134,11 @@ const pnd = (
         <div id="post-list" style={{ marginTop: '100px' }}>
           {Array.isArray(allPost) && allPost.map(post => (
             <div className="post" key={post._id}>
-              <a className="report-button" href="report.html">
-                <img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAAYFBMVEX///8jHyAmIiP8+/xMR0cyMDEyLi+fnZ6cmporKipta2tGQUT09PQxKy5JRkYsKSnW1ta9vL3c3NxPTE1MSEuwrq+XlZVDQEC2tLXS0dJnZWapp6gqJCfv7u4+ODllY2MTHEwoAAACG0lEQVR4nO3Z0VKjMBSA4SYUSIECrUrVXXff/y23Ti/UFnJOmjOjw/7fff6JGFIImw0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAALjHGJq+8r7qmzB+Z+Nlem0H54f2dbqj0YXWfdKG7nsab9Ppc+OU2CjC3l2p6iJtCiaNabhu7ENC47i9Hv7u8ZgyB4vG2Oc1DjeX4WJ30M/BovG80BiUjSc/P945/6Sdg0Xj11JC2TgszuFcUF4Li8bzckLVOC78Py92qvVp0Rh/5zWK2Xv0w4NizzBpzN7nCY0QH+9cLU/CojFlNrqbvf9aJf4iWTTeootT0RAvpuJyWjTEf4jUaOVAL03CovFHbrSx8aM83jnhyc2i8aJpxDYuxaoQ14VFQ7Gy4o1GE2jik7Bo/M1tCJv3xTY+CYvGSS7EG5UmUMYnYdEQN1+pEXlE+uDjk7BoaBLRxmr+kNUsrdXc7KvZflfzg6h6vBDeaSwa2Y8oP+ahUXGTxBureYzvxM2zlF+sDBryi5XUqPMuhFkj91V3UzzGx6sODiwauYcPm+MuNn7QHQcZNMbo4tI01nJAt54j0/P1XFgZ2sNjq0buIfZ5jc/erQ9pnxUsGrNHlimNor75LSiTP9JYNEJ2o6u/7H99fc+nN4tG+PK00t7TGOtmW3pfbps6aUGYN0LT773f53xQBQAAAAAAAAAAAAAAAAAAAAAAAAAAAADgP/cPR8keyvgAsIwAAAAASUVORK5CYII='alt="Report" />
+              <a className="report-button">
+                <img 
+                src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAAYFBMVEX///8jHyAmIiP8+/xMR0cyMDEyLi+fnZ6cmporKipta2tGQUT09PQxKy5JRkYsKSnW1ta9vL3c3NxPTE1MSEuwrq+XlZVDQEC2tLXS0dJnZWapp6gqJCfv7u4+ODllY2MTHEwoAAACG0lEQVR4nO3Z0VKjMBSA4SYUSIECrUrVXXff/y23Ti/UFnJOmjOjw/7fff6JGFIImw0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAALjHGJq+8r7qmzB+Z+Nlem0H54f2dbqj0YXWfdKG7nsab9Ppc+OU2CjC3l2p6iJtCiaNabhu7ENC47i9Hv7u8ZgyB4vG2Oc1DjeX4WJ30M/BovG80BiUjSc/P945/6Sdg0Xj11JC2TgszuFcUF4Li8bzckLVOC78Py92qvVp0Rh/5zWK2Xv0w4NizzBpzN7nCY0QH+9cLU/CojFlNrqbvf9aJf4iWTTeootT0RAvpuJyWjTEf4jUaOVAL03CovFHbrSx8aM83jnhyc2i8aJpxDYuxaoQ14VFQ7Gy4o1GE2jik7Bo/M1tCJv3xTY+CYvGSS7EG5UmUMYnYdEQN1+pEXlE+uDjk7BoaBLRxmr+kNUsrdXc7KvZflfzg6h6vBDeaSwa2Y8oP+ahUXGTxBureYzvxM2zlF+sDBryi5XUqPMuhFkj91V3UzzGx6sODiwauYcPm+MuNn7QHQcZNMbo4tI01nJAt54j0/P1XFgZ2sNjq0buIfZ5jc/erQ9pnxUsGrNHlimNor75LSiTP9JYNEJ2o6u/7H99fc+nN4tG+PK00t7TGOtmW3pfbps6aUGYN0LT773f53xQBQAAAAAAAAAAAAAAAAAAAAAAAAAAAADgP/cPR8keyvgAsIwAAAAASUVORK5CYII='
+                onClick={() => ReportPost(post.Post_Key)}
+                alt="Report" />
               </a>
               <h4 class = "button-feed" onClick={() => ChangPageToTagPost(post.Tag)}>#{post.Tag}</h4>
               <h2>{post.Text_Post}</h2>

@@ -112,18 +112,17 @@ def insert_PostReport():
         db = client["AppDev"]
         collection = db["Post_report"]
         data = request.get_json()
-        collectionIcon = db["Icon"]
         if 'PostReportMessage' not in data :
             return jsonify({"message": "Please fill in all fields"}), 400
-
         PostReportMessage = data.get('PostReportMessage')
         Post_Key = data.get('Post_Key')
+        Text_Post = data.get('Text_Post')
         if collection.count_documents({}) == 0:
             new_data = {"_id": 1, "PostReportMessage": PostReportMessage}
         else :
             max_id = collection.find_one(sort=[("_id", -1)])["_id"]
             new_id = max_id + 1
-            new_data = {"_id": new_id, "PostReportMessage": PostReportMessage , "Post_Key":Post_Key}
+            new_data = {"_id": new_id, "PostReportMessage": PostReportMessage , "Post_Key":Post_Key ,"Text_Post":Text_Post}
         result = collection.insert_one(new_data)
         return jsonify({"message": "Inserted Report Successfully"}), 200
     except Exception as e:
