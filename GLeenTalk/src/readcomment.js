@@ -203,10 +203,15 @@ const ReadComment = ()=>{
     }
 
     const handleLikeCommentClick = (commentId) => {
+        fetchData();
+        if(User_ID){
         const updatedLikedComments = { ...likedComments };
         updatedLikedComments[commentId] = !updatedLikedComments[commentId]; // Toggle liked status for this comment
         setLikedComments(updatedLikedComments); // Update liked status in state
         likeCommentApi(commentId, updatedLikedComments[commentId]); // Call API function
+        }else{
+            navigate("/login");
+        }
     }
 
     const gotoinsertpost = ()=>{
