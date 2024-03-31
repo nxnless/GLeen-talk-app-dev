@@ -6,7 +6,7 @@ import TaskBar from './Component/TaskBar';
 import './Component/Register.css'
 
 const Register = ()=>{
-    const url = "http://127.0.0.1:5000/"
+    const baseURL = "https://super-pancake-5p4jj6jvxrw3vgpv-5000.app.github.dev/";
     const Username = React.createRef();
     const Pass = React.createRef();
     const PassConfirm = React.createRef();
@@ -16,7 +16,7 @@ const Register = ()=>{
     const [checkUsername , setCheckUsername] = useState([]);
 
     React.useEffect(() => {
-        axios.get(url+"/api/alluser").then((response) => {
+        axios.get( baseURL+"/api/alluser").then((response) => {
             setCheckUsername(response.data);
         });
       }, []);
@@ -36,7 +36,7 @@ const Register = ()=>{
                     Password:Pass.current.value
                 }
                 try {
-                axios.post(url+"/api/CreateAccount",data).then((response) => {
+                axios.post( baseURL+"/api/CreateAccount",data).then((response) => {
                     setRegisState(response.data);
                 });
                 }catch (error) {
