@@ -55,7 +55,7 @@ const PostReport = ()=>{
         <Tag/>
         <TaskBar/>
         <div class="Post-Font">
-            <h1>REPORT</h1>
+            <h1 style={{position:'relative',top:'40px' }}>REPORT</h1>
         </div>
         <div class="container-form">
             <form action="">
