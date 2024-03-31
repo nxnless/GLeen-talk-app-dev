@@ -683,6 +683,52 @@ def get_all_post_by_trend():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route('/api/InsertIMG_PATH', methods=['POST'])
+@cross_origin()
+def insert_IMG_PATH():
+    try :
+        client.admin.command("ping")
+        db = client["AppDev"]
+        collection = db["IMG_Path"]
+        data = request.get_json()
+
+        if 'URL' not in data or 'Icon_Name' not in data:
+            return jsonify({"message": "Please fill in all fields"}), 400
+
+        URL = data.get('URL')
+        Icon_Name = data.get('Icon_Name')
+
+        if collection.count_documents({}) == 0:
+            new_data = {"_id": 1, "URL": URL,"Icon_Name": Icon_Name}
+        else :
+            # หา _id ที่มีค่ามากที่สุด
+            max_id = collection.find_one(sort=[("_id", -1)])["_id"]
+            # เพิ่มค่า _id ใหม่โดยบวกด้วย 1
+            new_id = max_id + 1
+            new_data = {"_id": new_id, "URL": URL,"Icon_Name": Icon_Name}
+
+        result = collection.insert_one(new_data)
+        # print(result)
+        return jsonify({"message": "Insert IMG_Path successfully", "URL": URL}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+@app.route('/api/GetALL_IMG_PATH', methods=['GET'])
+@cross_origin()
+def get_all_img_path():
+    try:
+        client.admin.command("ping")
+        db = client["AppDev"]
+        collection = db["IMG_Path"]
+
+        # ดึงข้อมูล Post ทั้งหมดและเรียงลำดับตาม _id จากมากไปน้อย
+        all_img_path = list(collection.find())
+
+        return jsonify(all_img_path), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 
 if (__name__ == "__main__") :
     app.run(debug=True, port=5000, host='0.0.0.0')
