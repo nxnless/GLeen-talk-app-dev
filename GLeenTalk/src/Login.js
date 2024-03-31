@@ -10,27 +10,28 @@ const Login = () => {
     const Pass = React.createRef();
     const baseURL = "https://super-pancake-5p4jj6jvxrw3vgpv-5000.app.github.dev/";
     const navigate = useNavigate();
-    
+    const [errorMassage,setErrorMessage] = useState('');
     const handleLogin = async () => {
         try {
-        const login = {
-            User_Name:Username.current.value,
-            Password:Pass.current.value
-        };
-        axios.post(baseURL+'/login',login).then((response) => {
-            setToken(response.data.access_token);
-            navigate("/homepage/"+response.data.access_token);
-        });
+            const login = {
+                User_Name:Username.current.value,
+                Password:Pass.current.value };
+
+            axios.post(baseURL+'/login',login).then((response) => {
+                setToken(response.data.access_token);
+           
+            });
+            if(token){
+                navigate("/homepage/"+token);
+            }else{
+                setErrorMessage("User or Password is incorrect")
+            }
             
-        const response = await axios.get(baseURL+'/protected', {
-            headers: { Authorization: 'Bearer '+{ token}  }
-        });
-        setData(response.data.logged_in_as);
-      
         } catch (error) {
             console.error('Login failed:', error);
-            }
-        };
+            
+        }
+    };
 
 
     const gotoRegister = ()=>{
@@ -62,7 +63,7 @@ const Login = () => {
                         <button  style={{ marginTop: '10px'}} class="btn"onClick= {gotoRegister}>Register</button>
                     </div>
                 </div>
-                
+                <div>{errorMassage}</div>
                 </div>
             </div>
         </div>

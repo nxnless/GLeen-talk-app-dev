@@ -86,7 +86,7 @@ const Register = ()=>{
                     <button type="submit" class="btn" style={{ marginTop: '-10px'}} onClick={ SendRegister.bind()} >Register</button>
                     <div class="login-register" >
                     <p>Already have an account? <a href="/login" class="login-link">Login</a></p>
-                    <p>{textError}</p>
+                    <div>{textError}</div>
                     </div>
                 </div>
                 </div>
