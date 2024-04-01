@@ -7,7 +7,7 @@ import { useNavigate , useHistory} from 'react-router-dom';
 import Tag from './Component/Tag';
 import TaskBar from './Component/TaskBar';
 const MyPost = ()=>{
-    const baseURL = "https://super-pancake-5p4jj6jvxrw3vgpv-5000.app.github.dev/";
+    const baseURL = "https://super-pancake-5p4jj6jvxrw3vgpv-5000.app.github.dev";
     const navigate = useNavigate();
     const [allPost,setAllpost ] = useState([]);
     const [error, setError] = useState(null);
@@ -49,7 +49,7 @@ const MyPost = ()=>{
     };
 
     const get_all_userPost = async () => {
-
+        console.log(User_ID);
         try {
             const response = await axios.get(baseURL + '/api/PostByUserID/' + User_ID);
             setAllpost(response.data);
@@ -59,14 +59,16 @@ const MyPost = ()=>{
         }
 };
 
-    useEffect(() => {
-        fetchData();
+        useEffect(() => {
+            const fetchDataAndPosts = async () => {
+                fetchData();
+                get_all_userPost(); 
+            };
+
+            fetchDataAndPosts();
+            get_all_userPost(); 
+        }, []);
         get_all_userPost();
-    }); 
-
-    
-   
-
         function likePostApi(postId, liked) {
             const data = {
                 User_ID:User_ID,
